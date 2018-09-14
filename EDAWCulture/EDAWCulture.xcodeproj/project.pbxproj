@@ -11,6 +11,7 @@
 		2C714494214B82A90034CE94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C714493214B82A90034CE94 /* Assets.xcassets */; };
 		2C714497214B82A90034CE94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C714495214B82A90034CE94 /* LaunchScreen.storyboard */; };
 		2C71449A214B82A90034CE94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C714499214B82A90034CE94 /* main.m */; };
+		6A4FB8C05B6AB9FE90800B1E /* libPods-EDAWCulture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 420074F6533135D556062A29 /* libPods-EDAWCulture.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		2C714498214B82A90034CE94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C714499214B82A90034CE94 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C7144A0214B834F0034CE94 /* VENPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENPrefixHeader.pch; sourceTree = "<group>"; };
+		420074F6533135D556062A29 /* libPods-EDAWCulture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EDAWCulture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C89513A9344A403800A57900 /* Pods-EDAWCulture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.debug.xcconfig"; sourceTree = "<group>"; };
+		E2EDCD305D67ED8CF2DC931B /* Pods-EDAWCulture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.release.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A4FB8C05B6AB9FE90800B1E /* libPods-EDAWCulture.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,8 @@
 			children = (
 				2C714489214B82A70034CE94 /* EDAWCulture */,
 				2C714488214B82A70034CE94 /* Products */,
+				A3AE7850FB040AD24FD26670 /* Pods */,
+				BB4CF9297243250BA650FCB4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +72,23 @@
 			path = EDAWCulture;
 			sourceTree = "<group>";
 		};
+		A3AE7850FB040AD24FD26670 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C89513A9344A403800A57900 /* Pods-EDAWCulture.debug.xcconfig */,
+				E2EDCD305D67ED8CF2DC931B /* Pods-EDAWCulture.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BB4CF9297243250BA650FCB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				420074F6533135D556062A29 /* libPods-EDAWCulture.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -72,9 +96,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C71449D214B82A90034CE94 /* Build configuration list for PBXNativeTarget "EDAWCulture" */;
 			buildPhases = (
+				31FCD1657CC551F0F795B314 /* [CP] Check Pods Manifest.lock */,
 				2C714483214B82A70034CE94 /* Sources */,
 				2C714484214B82A70034CE94 /* Frameworks */,
 				2C714485214B82A70034CE94 /* Resources */,
+				ACD83EB5B5038E15F8175E5C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -128,6 +154,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		31FCD1657CC551F0F795B314 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EDAWCulture-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACD83EB5B5038E15F8175E5C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C714483214B82A70034CE94 /* Sources */ = {
@@ -265,6 +338,7 @@
 		};
 		2C71449E214B82A90034CE94 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C89513A9344A403800A57900 /* Pods-EDAWCulture.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -284,6 +358,7 @@
 		};
 		2C71449F214B82A90034CE94 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2EDCD305D67ED8CF2DC931B /* Pods-EDAWCulture.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
