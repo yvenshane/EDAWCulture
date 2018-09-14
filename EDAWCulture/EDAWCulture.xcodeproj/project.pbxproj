@@ -13,6 +13,10 @@
 		2C71449A214B82A90034CE94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C714499214B82A90034CE94 /* main.m */; };
 		2C7144A6214B8BB20034CE94 /* VENNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144A5214B8BB20034CE94 /* VENNavigationController.m */; };
 		2C7144A9214B8C550034CE94 /* VENTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144A8214B8C550034CE94 /* VENTabBarController.m */; };
+		2C7144BC214B99EC0034CE94 /* VENHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144BB214B99EC0034CE94 /* VENHomePageViewController.m */; };
+		2C7144BF214B9A000034CE94 /* VENMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144BE214B9A000034CE94 /* VENMessageViewController.m */; };
+		2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */; };
+		2C7144C5214B9A210034CE94 /* VENPersonalCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144C4214B9A210034CE94 /* VENPersonalCenterViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,14 @@
 		2C7144A5214B8BB20034CE94 /* VENNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENNavigationController.m; sourceTree = "<group>"; };
 		2C7144A7214B8C550034CE94 /* VENTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENTabBarController.h; sourceTree = "<group>"; };
 		2C7144A8214B8C550034CE94 /* VENTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENTabBarController.m; sourceTree = "<group>"; };
+		2C7144BA214B99EC0034CE94 /* VENHomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENHomePageViewController.h; sourceTree = "<group>"; };
+		2C7144BB214B99EC0034CE94 /* VENHomePageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENHomePageViewController.m; sourceTree = "<group>"; };
+		2C7144BD214B9A000034CE94 /* VENMessageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENMessageViewController.h; sourceTree = "<group>"; };
+		2C7144BE214B9A000034CE94 /* VENMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENMessageViewController.m; sourceTree = "<group>"; };
+		2C7144C0214B9A110034CE94 /* VENCulturalCircleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENCulturalCircleViewController.h; sourceTree = "<group>"; };
+		2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENCulturalCircleViewController.m; sourceTree = "<group>"; };
+		2C7144C3214B9A210034CE94 /* VENPersonalCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENPersonalCenterViewController.h; sourceTree = "<group>"; };
+		2C7144C4214B9A210034CE94 /* VENPersonalCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENPersonalCenterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +88,10 @@
 			isa = PBXGroup;
 			children = (
 				2C7144A2214B8B2A0034CE94 /* Main */,
+				2C7144B2214B999E0034CE94 /* HomePage */,
+				2C7144B6214B999E0034CE94 /* Message */,
+				2C7144AE214B999E0034CE94 /* CulturalCircle */,
+				2C7144AA214B999E0034CE94 /* PersonalCenter */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -97,6 +113,138 @@
 				2C7144A8214B8C550034CE94 /* VENTabBarController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144AA214B999E0034CE94 /* PersonalCenter */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144AC214B999E0034CE94 /* Model */,
+				2C7144AD214B999E0034CE94 /* View */,
+				2C7144AB214B999E0034CE94 /* Controller */,
+			);
+			path = PersonalCenter;
+			sourceTree = "<group>";
+		};
+		2C7144AB214B999E0034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144C3214B9A210034CE94 /* VENPersonalCenterViewController.h */,
+				2C7144C4214B9A210034CE94 /* VENPersonalCenterViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144AC214B999E0034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144AD214B999E0034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C7144AE214B999E0034CE94 /* CulturalCircle */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144B0214B999E0034CE94 /* Model */,
+				2C7144B1214B999E0034CE94 /* View */,
+				2C7144AF214B999E0034CE94 /* Controller */,
+			);
+			path = CulturalCircle;
+			sourceTree = "<group>";
+		};
+		2C7144AF214B999E0034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144C0214B9A110034CE94 /* VENCulturalCircleViewController.h */,
+				2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144B0214B999E0034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144B1214B999E0034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C7144B2214B999E0034CE94 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144B4214B999E0034CE94 /* Model */,
+				2C7144B5214B999E0034CE94 /* View */,
+				2C7144B3214B999E0034CE94 /* Controller */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		2C7144B3214B999E0034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144BA214B99EC0034CE94 /* VENHomePageViewController.h */,
+				2C7144BB214B99EC0034CE94 /* VENHomePageViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144B4214B999E0034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144B5214B999E0034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C7144B6214B999E0034CE94 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144B8214B999E0034CE94 /* Model */,
+				2C7144B9214B999E0034CE94 /* View */,
+				2C7144B7214B999E0034CE94 /* Controller */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		2C7144B7214B999E0034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144BD214B9A000034CE94 /* VENMessageViewController.h */,
+				2C7144BE214B9A000034CE94 /* VENMessageViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144B8214B999E0034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144B9214B999E0034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,8 +316,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */,
+				2C7144BF214B9A000034CE94 /* VENMessageViewController.m in Sources */,
 				2C7144A6214B8BB20034CE94 /* VENNavigationController.m in Sources */,
+				2C7144C5214B9A210034CE94 /* VENPersonalCenterViewController.m in Sources */,
 				2C7144A9214B8C550034CE94 /* VENTabBarController.m in Sources */,
+				2C7144BC214B99EC0034CE94 /* VENHomePageViewController.m in Sources */,
 				2C71449A214B82A90034CE94 /* main.m in Sources */,
 				2C71448C214B82A70034CE94 /* AppDelegate.m in Sources */,
 			);
