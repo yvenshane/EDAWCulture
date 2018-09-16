@@ -8,7 +8,7 @@
 
 #import "VENTabBarController.h"
 #import "VENNavigationController.h"
-//#import "VENLoginViewController.h"
+#import "VENLoginViewController.h"
 
 @interface VENTabBarController () <UITabBarControllerDelegate>
 
@@ -34,16 +34,16 @@
     self.tabBar.translucent = NO;
 }
 
-//- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-//    if (viewController.tabBarItem.tag == 3) {
-//        VENLoginViewController *vc = [[VENLoginViewController alloc] init];
-//        [self presentViewController:vc animated:YES completion:nil];
-//        return NO;
-//    } else {
-//
-//        return YES;
-//    }
-//}
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+    if (viewController.tabBarItem.tag == 3) {
+        VENLoginViewController *vc = [[VENLoginViewController alloc] init];
+        [self presentViewController:vc animated:YES completion:nil];
+        return NO;
+    } else {
+
+        return YES;
+    }
+}
 
 - (UIViewController *)loadChildViewControllerWithClassName:(NSString *)className andTitle:(NSString *)title andImageName:(NSString *)imageName {
     
