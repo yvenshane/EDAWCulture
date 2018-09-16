@@ -17,6 +17,38 @@
 		2C7144BF214B9A000034CE94 /* VENMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144BE214B9A000034CE94 /* VENMessageViewController.m */; };
 		2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */; };
 		2C7144C5214B9A210034CE94 /* VENPersonalCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144C4214B9A210034CE94 /* VENPersonalCenterViewController.m */; };
+		2C7144D0214B9DBE0034CE94 /* VENHomePageHeaderViewPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144C8214B9DBD0034CE94 /* VENHomePageHeaderViewPageControl.m */; };
+		2C7144D1214B9DBE0034CE94 /* VENHomePageHeaderViewScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144CA214B9DBD0034CE94 /* VENHomePageHeaderViewScrollView.m */; };
+		2C7144D2214B9DBE0034CE94 /* VENHomePageHeaderViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144CC214B9DBD0034CE94 /* VENHomePageHeaderViewButton.m */; };
+		2C7144D3214B9DBE0034CE94 /* VENHomePageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144CD214B9DBE0034CE94 /* VENHomePageTableViewCell.m */; };
+		2C7144D4214B9DBE0034CE94 /* VENHomePageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C7144CF214B9DBE0034CE94 /* VENHomePageTableViewCell.xib */; };
+		2C7144EC214B9E340034CE94 /* VENCheckoutSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144D9214B9E340034CE94 /* VENCheckoutSuccessViewController.m */; };
+		2C7144ED214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144DD214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m */; };
+		2C7144EE214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144E1214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.m */; };
+		2C7144EF214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144E4214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m */; };
+		2C7144F0214B9E340034CE94 /* VENWorkAndLuckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7144E8214B9E340034CE94 /* VENWorkAndLuckViewController.m */; };
+		2C911937214D565600A3B6DA /* VENCulturalCircleApprenticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91192F214D565500A3B6DA /* VENCulturalCircleApprenticeViewController.m */; };
+		2C911938214D565600A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911932214D565500A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m */; };
+		2C911939214D565600A3B6DA /* VENCulturalCircleDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911935214D565600A3B6DA /* VENCulturalCircleDetailViewController.m */; };
+		2C91193D214D569900A3B6DA /* VENPersonalCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91193A214D569900A3B6DA /* VENPersonalCenterTableViewCell.m */; };
+		2C91193E214D569900A3B6DA /* VENPersonalCenterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C91193B214D569900A3B6DA /* VENPersonalCenterTableViewCell.xib */; };
+		2C911971214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911941214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m */; };
+		2C911972214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911942214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m */; };
+		2C911973214D56D300A3B6DA /* VENMyBalanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911947214D56D300A3B6DA /* VENMyBalanceViewController.m */; };
+		2C911974214D56D300A3B6DA /* VENMyBalanceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91194B214D56D300A3B6DA /* VENMyBalanceTableViewCell.m */; };
+		2C911975214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C91194C214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib */; };
+		2C911976214D56D300A3B6DA /* VENMyFocusingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911950214D56D300A3B6DA /* VENMyFocusingViewController.m */; };
+		2C911977214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C911955214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib */; };
+		2C911978214D56D300A3B6DA /* VENMyFocusingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911956214D56D300A3B6DA /* VENMyFocusingTableViewCell.m */; };
+		2C911979214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91195A214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m */; };
+		2C91197A214D56D300A3B6DA /* VENMyOrderFinishedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911960214D56D300A3B6DA /* VENMyOrderFinishedViewController.m */; };
+		2C91197B214D56D300A3B6DA /* VENMyOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911965214D56D300A3B6DA /* VENMyOrderViewController.m */; };
+		2C91197C214D56D300A3B6DA /* VENMyOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C911969214D56D300A3B6DA /* VENMyOrderTableViewCell.xib */; };
+		2C91197D214D56D300A3B6DA /* VENMyOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91196A214D56D300A3B6DA /* VENMyOrderTableViewCell.m */; };
+		2C91197E214D56D300A3B6DA /* VENMyOrderCategoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91196B214D56D300A3B6DA /* VENMyOrderCategoryView.m */; };
+		2C91197F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C91196F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m */; };
+		2C911983214D570000A3B6DA /* VENUserTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911981214D570000A3B6DA /* VENUserTypeManager.m */; };
+		9EDDF72A575FC846D5361EDD /* libPods-EDAWCulture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30373FDA5AEE35685B2A31EA /* libPods-EDAWCulture.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +72,66 @@
 		2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENCulturalCircleViewController.m; sourceTree = "<group>"; };
 		2C7144C3214B9A210034CE94 /* VENPersonalCenterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENPersonalCenterViewController.h; sourceTree = "<group>"; };
 		2C7144C4214B9A210034CE94 /* VENPersonalCenterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENPersonalCenterViewController.m; sourceTree = "<group>"; };
+		2C7144C7214B9DBD0034CE94 /* VENHomePageHeaderViewScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENHomePageHeaderViewScrollView.h; sourceTree = "<group>"; };
+		2C7144C8214B9DBD0034CE94 /* VENHomePageHeaderViewPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENHomePageHeaderViewPageControl.m; sourceTree = "<group>"; };
+		2C7144C9214B9DBD0034CE94 /* VENHomePageHeaderViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENHomePageHeaderViewButton.h; sourceTree = "<group>"; };
+		2C7144CA214B9DBD0034CE94 /* VENHomePageHeaderViewScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENHomePageHeaderViewScrollView.m; sourceTree = "<group>"; };
+		2C7144CB214B9DBD0034CE94 /* VENHomePageHeaderViewPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENHomePageHeaderViewPageControl.h; sourceTree = "<group>"; };
+		2C7144CC214B9DBD0034CE94 /* VENHomePageHeaderViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENHomePageHeaderViewButton.m; sourceTree = "<group>"; };
+		2C7144CD214B9DBE0034CE94 /* VENHomePageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENHomePageTableViewCell.m; sourceTree = "<group>"; };
+		2C7144CE214B9DBE0034CE94 /* VENHomePageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENHomePageTableViewCell.h; sourceTree = "<group>"; };
+		2C7144CF214B9DBE0034CE94 /* VENHomePageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENHomePageTableViewCell.xib; sourceTree = "<group>"; };
+		2C7144D9214B9E340034CE94 /* VENCheckoutSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCheckoutSuccessViewController.m; sourceTree = "<group>"; };
+		2C7144DA214B9E340034CE94 /* VENCheckoutSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCheckoutSuccessViewController.h; sourceTree = "<group>"; };
+		2C7144DD214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENWorkAndLuckDetailViewController.m; sourceTree = "<group>"; };
+		2C7144DE214B9E340034CE94 /* VENWorkAndLuckDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENWorkAndLuckDetailViewController.h; sourceTree = "<group>"; };
+		2C7144E1214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENWorkAndLuckDetailTableViewCell.m; sourceTree = "<group>"; };
+		2C7144E3214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENWorkAndLuckDetailPopupView.h; sourceTree = "<group>"; };
+		2C7144E4214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENWorkAndLuckDetailPopupView.m; sourceTree = "<group>"; };
+		2C7144E5214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENWorkAndLuckDetailTableViewCell.h; sourceTree = "<group>"; };
+		2C7144E8214B9E340034CE94 /* VENWorkAndLuckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENWorkAndLuckViewController.m; sourceTree = "<group>"; };
+		2C7144E9214B9E340034CE94 /* VENWorkAndLuckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENWorkAndLuckViewController.h; sourceTree = "<group>"; };
+		2C91192E214D565500A3B6DA /* VENCulturalCircleApprenticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCulturalCircleApprenticeViewController.h; sourceTree = "<group>"; };
+		2C91192F214D565500A3B6DA /* VENCulturalCircleApprenticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCulturalCircleApprenticeViewController.m; sourceTree = "<group>"; };
+		2C911932214D565500A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCulturalCircleApprenticeTableViewCell.m; sourceTree = "<group>"; };
+		2C911933214D565500A3B6DA /* VENCulturalCircleApprenticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCulturalCircleApprenticeTableViewCell.h; sourceTree = "<group>"; };
+		2C911935214D565600A3B6DA /* VENCulturalCircleDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENCulturalCircleDetailViewController.m; sourceTree = "<group>"; };
+		2C911936214D565600A3B6DA /* VENCulturalCircleDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENCulturalCircleDetailViewController.h; sourceTree = "<group>"; };
+		2C91193A214D569900A3B6DA /* VENPersonalCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENPersonalCenterTableViewCell.m; sourceTree = "<group>"; };
+		2C91193B214D569900A3B6DA /* VENPersonalCenterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENPersonalCenterTableViewCell.xib; sourceTree = "<group>"; };
+		2C91193C214D569900A3B6DA /* VENPersonalCenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENPersonalCenterTableViewCell.h; sourceTree = "<group>"; };
+		2C911941214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyBalanceWithdrawSuccessPageViewController.m; sourceTree = "<group>"; };
+		2C911942214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyBalanceWithdrawPageViewController.m; sourceTree = "<group>"; };
+		2C911943214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyBalanceWithdrawSuccessPageViewController.h; sourceTree = "<group>"; };
+		2C911944214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyBalanceWithdrawPageViewController.h; sourceTree = "<group>"; };
+		2C911947214D56D300A3B6DA /* VENMyBalanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyBalanceViewController.m; sourceTree = "<group>"; };
+		2C911948214D56D300A3B6DA /* VENMyBalanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyBalanceViewController.h; sourceTree = "<group>"; };
+		2C91194B214D56D300A3B6DA /* VENMyBalanceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyBalanceTableViewCell.m; sourceTree = "<group>"; };
+		2C91194C214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENMyBalanceTableViewCell.xib; sourceTree = "<group>"; };
+		2C91194D214D56D300A3B6DA /* VENMyBalanceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyBalanceTableViewCell.h; sourceTree = "<group>"; };
+		2C911950214D56D300A3B6DA /* VENMyFocusingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyFocusingViewController.m; sourceTree = "<group>"; };
+		2C911951214D56D300A3B6DA /* VENMyFocusingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyFocusingViewController.h; sourceTree = "<group>"; };
+		2C911954214D56D300A3B6DA /* VENMyFocusingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyFocusingTableViewCell.h; sourceTree = "<group>"; };
+		2C911955214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENMyFocusingTableViewCell.xib; sourceTree = "<group>"; };
+		2C911956214D56D300A3B6DA /* VENMyFocusingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyFocusingTableViewCell.m; sourceTree = "<group>"; };
+		2C91195A214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderUnderwayViewController.m; sourceTree = "<group>"; };
+		2C91195B214D56D300A3B6DA /* VENMyOrderUnderwayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderUnderwayViewController.h; sourceTree = "<group>"; };
+		2C91195F214D56D300A3B6DA /* VENMyOrderFinishedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderFinishedViewController.h; sourceTree = "<group>"; };
+		2C911960214D56D300A3B6DA /* VENMyOrderFinishedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderFinishedViewController.m; sourceTree = "<group>"; };
+		2C911964214D56D300A3B6DA /* VENMyOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderViewController.h; sourceTree = "<group>"; };
+		2C911965214D56D300A3B6DA /* VENMyOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderViewController.m; sourceTree = "<group>"; };
+		2C911967214D56D300A3B6DA /* VENMyOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderTableViewCell.h; sourceTree = "<group>"; };
+		2C911968214D56D300A3B6DA /* VENMyOrderCategoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderCategoryView.h; sourceTree = "<group>"; };
+		2C911969214D56D300A3B6DA /* VENMyOrderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENMyOrderTableViewCell.xib; sourceTree = "<group>"; };
+		2C91196A214D56D300A3B6DA /* VENMyOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderTableViewCell.m; sourceTree = "<group>"; };
+		2C91196B214D56D300A3B6DA /* VENMyOrderCategoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderCategoryView.m; sourceTree = "<group>"; };
+		2C91196E214D56D300A3B6DA /* VENMyOrderUnpaidViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENMyOrderUnpaidViewController.h; sourceTree = "<group>"; };
+		2C91196F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENMyOrderUnpaidViewController.m; sourceTree = "<group>"; };
+		2C911981214D570000A3B6DA /* VENUserTypeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENUserTypeManager.m; sourceTree = "<group>"; };
+		2C911982214D570000A3B6DA /* VENUserTypeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENUserTypeManager.h; sourceTree = "<group>"; };
+		30373FDA5AEE35685B2A31EA /* libPods-EDAWCulture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EDAWCulture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		468B60404D35322239A897EB /* Pods-EDAWCulture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.release.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.release.xcconfig"; sourceTree = "<group>"; };
+		F0140756D4E8111BE336F024 /* Pods-EDAWCulture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EDDF72A575FC846D5361EDD /* libPods-EDAWCulture.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +151,8 @@
 			children = (
 				2C714489214B82A70034CE94 /* EDAWCulture */,
 				2C714488214B82A70034CE94 /* Products */,
+				72C19E9E47CBD0914B259676 /* Pods */,
+				C6E9AEAFBC316EC75768C0C2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +182,7 @@
 		2C7144A1214B8B2A0034CE94 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2C911980214D570000A3B6DA /* SharedManager */,
 				2C7144A2214B8B2A0034CE94 /* Main */,
 				2C7144B2214B999E0034CE94 /* HomePage */,
 				2C7144B6214B999E0034CE94 /* Message */,
@@ -118,6 +214,9 @@
 		2C7144AA214B999E0034CE94 /* PersonalCenter */ = {
 			isa = PBXGroup;
 			children = (
+				2C91193F214D56D300A3B6DA /* MyBalance */,
+				2C91194E214D56D300A3B6DA /* MyFocusing */,
+				2C911957214D56D300A3B6DA /* MyOrder */,
 				2C7144AC214B999E0034CE94 /* Model */,
 				2C7144AD214B999E0034CE94 /* View */,
 				2C7144AB214B999E0034CE94 /* Controller */,
@@ -144,6 +243,9 @@
 		2C7144AD214B999E0034CE94 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2C91193C214D569900A3B6DA /* VENPersonalCenterTableViewCell.h */,
+				2C91193A214D569900A3B6DA /* VENPersonalCenterTableViewCell.m */,
+				2C91193B214D569900A3B6DA /* VENPersonalCenterTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +265,8 @@
 			children = (
 				2C7144C0214B9A110034CE94 /* VENCulturalCircleViewController.h */,
 				2C7144C1214B9A110034CE94 /* VENCulturalCircleViewController.m */,
+				2C911934214D565600A3B6DA /* Detail */,
+				2C91192C214D565500A3B6DA /* Apprentice */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -184,9 +288,8 @@
 		2C7144B2214B999E0034CE94 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				2C7144B4214B999E0034CE94 /* Model */,
-				2C7144B5214B999E0034CE94 /* View */,
-				2C7144B3214B999E0034CE94 /* Controller */,
+				2C7144D5214B9DF00034CE94 /* Main */,
+				2C7144D6214B9E340034CE94 /* Work&Luck */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -210,6 +313,10 @@
 		2C7144B5214B999E0034CE94 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2C7144C6214B9DBD0034CE94 /* HeaderView */,
+				2C7144CE214B9DBE0034CE94 /* VENHomePageTableViewCell.h */,
+				2C7144CD214B9DBE0034CE94 /* VENHomePageTableViewCell.m */,
+				2C7144CF214B9DBE0034CE94 /* VENHomePageTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -247,6 +354,412 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2C7144C6214B9DBD0034CE94 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144C7214B9DBD0034CE94 /* VENHomePageHeaderViewScrollView.h */,
+				2C7144C8214B9DBD0034CE94 /* VENHomePageHeaderViewPageControl.m */,
+				2C7144C9214B9DBD0034CE94 /* VENHomePageHeaderViewButton.h */,
+				2C7144CA214B9DBD0034CE94 /* VENHomePageHeaderViewScrollView.m */,
+				2C7144CB214B9DBD0034CE94 /* VENHomePageHeaderViewPageControl.h */,
+				2C7144CC214B9DBD0034CE94 /* VENHomePageHeaderViewButton.m */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		2C7144D5214B9DF00034CE94 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144B4214B999E0034CE94 /* Model */,
+				2C7144B5214B999E0034CE94 /* View */,
+				2C7144B3214B999E0034CE94 /* Controller */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2C7144D6214B9E340034CE94 /* Work&Luck */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144E6214B9E340034CE94 /* List */,
+				2C7144DB214B9E340034CE94 /* Detail */,
+				2C7144D7214B9E340034CE94 /* CheckoutSuccess */,
+			);
+			path = "Work&Luck";
+			sourceTree = "<group>";
+		};
+		2C7144D7214B9E340034CE94 /* CheckoutSuccess */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144D8214B9E340034CE94 /* Controller */,
+			);
+			path = CheckoutSuccess;
+			sourceTree = "<group>";
+		};
+		2C7144D8214B9E340034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144DA214B9E340034CE94 /* VENCheckoutSuccessViewController.h */,
+				2C7144D9214B9E340034CE94 /* VENCheckoutSuccessViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144DB214B9E340034CE94 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144DF214B9E340034CE94 /* Model */,
+				2C7144E0214B9E340034CE94 /* View */,
+				2C7144DC214B9E340034CE94 /* Controller */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		2C7144DC214B9E340034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144DE214B9E340034CE94 /* VENWorkAndLuckDetailViewController.h */,
+				2C7144DD214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144DF214B9E340034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144E0214B9E340034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144E5214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.h */,
+				2C7144E1214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.m */,
+				2C7144E2214B9E340034CE94 /* Popup */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C7144E2214B9E340034CE94 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144E3214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.h */,
+				2C7144E4214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		2C7144E6214B9E340034CE94 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144EA214B9E340034CE94 /* Model */,
+				2C7144EB214B9E340034CE94 /* View */,
+				2C7144E7214B9E340034CE94 /* Controller */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		2C7144E7214B9E340034CE94 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C7144E9214B9E340034CE94 /* VENWorkAndLuckViewController.h */,
+				2C7144E8214B9E340034CE94 /* VENWorkAndLuckViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C7144EA214B9E340034CE94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C7144EB214B9E340034CE94 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C91192C214D565500A3B6DA /* Apprentice */ = {
+			isa = PBXGroup;
+			children = (
+				2C911930214D565500A3B6DA /* Model */,
+				2C911931214D565500A3B6DA /* View */,
+				2C91192D214D565500A3B6DA /* Controller */,
+			);
+			path = Apprentice;
+			sourceTree = "<group>";
+		};
+		2C91192D214D565500A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C91192E214D565500A3B6DA /* VENCulturalCircleApprenticeViewController.h */,
+				2C91192F214D565500A3B6DA /* VENCulturalCircleApprenticeViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911930214D565500A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C911931214D565500A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C911932214D565500A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m */,
+				2C911933214D565500A3B6DA /* VENCulturalCircleApprenticeTableViewCell.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C911934214D565600A3B6DA /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				2C911935214D565600A3B6DA /* VENCulturalCircleDetailViewController.m */,
+				2C911936214D565600A3B6DA /* VENCulturalCircleDetailViewController.h */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		2C91193F214D56D300A3B6DA /* MyBalance */ = {
+			isa = PBXGroup;
+			children = (
+				2C911940214D56D300A3B6DA /* Withdraw */,
+				2C911945214D56D300A3B6DA /* Main */,
+			);
+			path = MyBalance;
+			sourceTree = "<group>";
+		};
+		2C911940214D56D300A3B6DA /* Withdraw */ = {
+			isa = PBXGroup;
+			children = (
+				2C911941214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m */,
+				2C911942214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m */,
+				2C911943214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.h */,
+				2C911944214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.h */,
+			);
+			path = Withdraw;
+			sourceTree = "<group>";
+		};
+		2C911945214D56D300A3B6DA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2C911946214D56D300A3B6DA /* Controller */,
+				2C911949214D56D300A3B6DA /* Model */,
+				2C91194A214D56D300A3B6DA /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2C911946214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C911947214D56D300A3B6DA /* VENMyBalanceViewController.m */,
+				2C911948214D56D300A3B6DA /* VENMyBalanceViewController.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911949214D56D300A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C91194A214D56D300A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C91194B214D56D300A3B6DA /* VENMyBalanceTableViewCell.m */,
+				2C91194C214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib */,
+				2C91194D214D56D300A3B6DA /* VENMyBalanceTableViewCell.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C91194E214D56D300A3B6DA /* MyFocusing */ = {
+			isa = PBXGroup;
+			children = (
+				2C91194F214D56D300A3B6DA /* Controller */,
+				2C911952214D56D300A3B6DA /* Model */,
+				2C911953214D56D300A3B6DA /* View */,
+			);
+			path = MyFocusing;
+			sourceTree = "<group>";
+		};
+		2C91194F214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C911950214D56D300A3B6DA /* VENMyFocusingViewController.m */,
+				2C911951214D56D300A3B6DA /* VENMyFocusingViewController.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911952214D56D300A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C911953214D56D300A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C911954214D56D300A3B6DA /* VENMyFocusingTableViewCell.h */,
+				2C911955214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib */,
+				2C911956214D56D300A3B6DA /* VENMyFocusingTableViewCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C911957214D56D300A3B6DA /* MyOrder */ = {
+			isa = PBXGroup;
+			children = (
+				2C911958214D56D300A3B6DA /* Underway */,
+				2C91195D214D56D300A3B6DA /* Finished */,
+				2C911962214D56D300A3B6DA /* Main */,
+				2C91196C214D56D300A3B6DA /* Unpaid */,
+			);
+			path = MyOrder;
+			sourceTree = "<group>";
+		};
+		2C911958214D56D300A3B6DA /* Underway */ = {
+			isa = PBXGroup;
+			children = (
+				2C911959214D56D300A3B6DA /* Controller */,
+				2C91195C214D56D300A3B6DA /* Model */,
+			);
+			path = Underway;
+			sourceTree = "<group>";
+		};
+		2C911959214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C91195A214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m */,
+				2C91195B214D56D300A3B6DA /* VENMyOrderUnderwayViewController.h */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C91195C214D56D300A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C91195D214D56D300A3B6DA /* Finished */ = {
+			isa = PBXGroup;
+			children = (
+				2C91195E214D56D300A3B6DA /* Controller */,
+				2C911961214D56D300A3B6DA /* Model */,
+			);
+			path = Finished;
+			sourceTree = "<group>";
+		};
+		2C91195E214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C91195F214D56D300A3B6DA /* VENMyOrderFinishedViewController.h */,
+				2C911960214D56D300A3B6DA /* VENMyOrderFinishedViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911961214D56D300A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C911962214D56D300A3B6DA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2C911963214D56D300A3B6DA /* Controller */,
+				2C911966214D56D300A3B6DA /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2C911963214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C911964214D56D300A3B6DA /* VENMyOrderViewController.h */,
+				2C911965214D56D300A3B6DA /* VENMyOrderViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911966214D56D300A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C911967214D56D300A3B6DA /* VENMyOrderTableViewCell.h */,
+				2C911968214D56D300A3B6DA /* VENMyOrderCategoryView.h */,
+				2C911969214D56D300A3B6DA /* VENMyOrderTableViewCell.xib */,
+				2C91196A214D56D300A3B6DA /* VENMyOrderTableViewCell.m */,
+				2C91196B214D56D300A3B6DA /* VENMyOrderCategoryView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C91196C214D56D300A3B6DA /* Unpaid */ = {
+			isa = PBXGroup;
+			children = (
+				2C91196D214D56D300A3B6DA /* Controller */,
+				2C911970214D56D300A3B6DA /* Model */,
+			);
+			path = Unpaid;
+			sourceTree = "<group>";
+		};
+		2C91196D214D56D300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C91196E214D56D300A3B6DA /* VENMyOrderUnpaidViewController.h */,
+				2C91196F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C911970214D56D300A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C911980214D570000A3B6DA /* SharedManager */ = {
+			isa = PBXGroup;
+			children = (
+				2C911982214D570000A3B6DA /* VENUserTypeManager.h */,
+				2C911981214D570000A3B6DA /* VENUserTypeManager.m */,
+			);
+			path = SharedManager;
+			sourceTree = "<group>";
+		};
+		72C19E9E47CBD0914B259676 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F0140756D4E8111BE336F024 /* Pods-EDAWCulture.debug.xcconfig */,
+				468B60404D35322239A897EB /* Pods-EDAWCulture.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C6E9AEAFBC316EC75768C0C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30373FDA5AEE35685B2A31EA /* libPods-EDAWCulture.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -254,9 +767,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C71449D214B82A90034CE94 /* Build configuration list for PBXNativeTarget "EDAWCulture" */;
 			buildPhases = (
+				0DA0BDD4173AAC5F67375A24 /* [CP] Check Pods Manifest.lock */,
 				2C714483214B82A70034CE94 /* Sources */,
 				2C714484214B82A70034CE94 /* Frameworks */,
 				2C714485214B82A70034CE94 /* Resources */,
+				76F4779E473CFACA1726EEE4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -304,12 +819,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C91193E214D569900A3B6DA /* VENPersonalCenterTableViewCell.xib in Resources */,
+				2C7144D4214B9DBE0034CE94 /* VENHomePageTableViewCell.xib in Resources */,
+				2C91197C214D56D300A3B6DA /* VENMyOrderTableViewCell.xib in Resources */,
+				2C911975214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib in Resources */,
 				2C714497214B82A90034CE94 /* LaunchScreen.storyboard in Resources */,
 				2C714494214B82A90034CE94 /* Assets.xcassets in Resources */,
+				2C911977214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0DA0BDD4173AAC5F67375A24 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EDAWCulture-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76F4779E473CFACA1726EEE4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C714483214B82A70034CE94 /* Sources */ = {
@@ -317,13 +876,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */,
+				2C7144ED214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m in Sources */,
+				2C91197F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m in Sources */,
+				2C911971214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m in Sources */,
+				2C7144F0214B9E340034CE94 /* VENWorkAndLuckViewController.m in Sources */,
 				2C7144BF214B9A000034CE94 /* VENMessageViewController.m in Sources */,
 				2C7144A6214B8BB20034CE94 /* VENNavigationController.m in Sources */,
+				2C7144D3214B9DBE0034CE94 /* VENHomePageTableViewCell.m in Sources */,
+				2C7144D2214B9DBE0034CE94 /* VENHomePageHeaderViewButton.m in Sources */,
+				2C911937214D565600A3B6DA /* VENCulturalCircleApprenticeViewController.m in Sources */,
+				2C91197B214D56D300A3B6DA /* VENMyOrderViewController.m in Sources */,
+				2C7144EC214B9E340034CE94 /* VENCheckoutSuccessViewController.m in Sources */,
+				2C911979214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m in Sources */,
+				2C91197D214D56D300A3B6DA /* VENMyOrderTableViewCell.m in Sources */,
 				2C7144C5214B9A210034CE94 /* VENPersonalCenterViewController.m in Sources */,
+				2C911974214D56D300A3B6DA /* VENMyBalanceTableViewCell.m in Sources */,
+				2C911973214D56D300A3B6DA /* VENMyBalanceViewController.m in Sources */,
 				2C7144A9214B8C550034CE94 /* VENTabBarController.m in Sources */,
+				2C911972214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m in Sources */,
+				2C911939214D565600A3B6DA /* VENCulturalCircleDetailViewController.m in Sources */,
 				2C7144BC214B99EC0034CE94 /* VENHomePageViewController.m in Sources */,
+				2C7144EF214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m in Sources */,
 				2C71449A214B82A90034CE94 /* main.m in Sources */,
+				2C911938214D565600A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m in Sources */,
+				2C91197E214D56D300A3B6DA /* VENMyOrderCategoryView.m in Sources */,
+				2C911978214D56D300A3B6DA /* VENMyFocusingTableViewCell.m in Sources */,
+				2C91197A214D56D300A3B6DA /* VENMyOrderFinishedViewController.m in Sources */,
+				2C7144D1214B9DBE0034CE94 /* VENHomePageHeaderViewScrollView.m in Sources */,
+				2C7144EE214B9E340034CE94 /* VENWorkAndLuckDetailTableViewCell.m in Sources */,
+				2C91193D214D569900A3B6DA /* VENPersonalCenterTableViewCell.m in Sources */,
+				2C911983214D570000A3B6DA /* VENUserTypeManager.m in Sources */,
 				2C71448C214B82A70034CE94 /* AppDelegate.m in Sources */,
+				2C911976214D56D300A3B6DA /* VENMyFocusingViewController.m in Sources */,
+				2C7144D0214B9DBE0034CE94 /* VENHomePageHeaderViewPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +1038,7 @@
 		};
 		2C71449E214B82A90034CE94 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0140756D4E8111BE336F024 /* Pods-EDAWCulture.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -472,6 +1058,7 @@
 		};
 		2C71449F214B82A90034CE94 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 468B60404D35322239A897EB /* Pods-EDAWCulture.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
