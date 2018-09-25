@@ -17,10 +17,13 @@
 #import <Masonry.h>
 #import <SDWebImageManager.h>
 #import <SDCycleScrollView.h>
-#import "VENUserTypeManager.h"
-//#import "SDWebImageManager.h"
-//#import "EaseUI.h"
+#import <MBProgressHUD.h>
+#import <YYModel.h>
 #import "MJRefreshNormalHeader.h"
+
+#import "VENUserTypeManager.h"
+#import "VENNetworkTool.h"
+
 
 #define kMainScreenFrameRect [UIScreen mainScreen].bounds
 #define kMainScreenWidth kMainScreenFrameRect.size.width

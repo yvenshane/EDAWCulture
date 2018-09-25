@@ -8,6 +8,7 @@
 
 #import "VENRegisterViewController.h"
 #import "VENRegisterTableViewCell.h"
+#import "VENRegisterModel.h"
 
 @interface VENRegisterViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) NSMutableArray *leftTextFieldPlaceholderTextMuArr;
@@ -24,6 +25,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupTabbleView];
+    [self loadRegisterViewData];
+}
+
+- (void)loadRegisterViewData {
+    [[VENNetworkTool sharedNetworkToolManager] GET:@"index/province" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//        NSLog(@"%@", responseObject);
+        
+        VENRegisterModel *model = [VENRegisterModel yy_modelWithJSON:responseObject[@"data"]];
+        
+        NSLog(@"%@", model.provinces[1][@"province"]);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

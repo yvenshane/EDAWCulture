@@ -58,6 +58,8 @@
 		2C91199E214DF4E800A3B6DA /* VENFindPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C91198F214DF4E700A3B6DA /* VENFindPasswordViewController.xib */; };
 		2C91199F214DF4E800A3B6DA /* VENRegisterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C911994214DF4E700A3B6DA /* VENRegisterTableViewCell.xib */; };
 		2C9119A0214DF4E800A3B6DA /* VENRegisterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C911995214DF4E700A3B6DA /* VENRegisterTableViewCell.m */; };
+		2C9119AC214E9D9A00A3B6DA /* VENNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9119AB214E9D9A00A3B6DA /* VENNetworkTool.m */; };
+		2C9119BA214F37C400A3B6DA /* VENRegisterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9119B9214F37C400A3B6DA /* VENRegisterModel.m */; };
 		9EDDF72A575FC846D5361EDD /* libPods-EDAWCulture.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30373FDA5AEE35685B2A31EA /* libPods-EDAWCulture.a */; };
 /* End PBXBuildFile section */
 
@@ -154,6 +156,10 @@
 		2C911994214DF4E700A3B6DA /* VENRegisterTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENRegisterTableViewCell.xib; sourceTree = "<group>"; };
 		2C911995214DF4E700A3B6DA /* VENRegisterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENRegisterTableViewCell.m; sourceTree = "<group>"; };
 		2C911996214DF4E700A3B6DA /* VENRegisterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENRegisterTableViewCell.h; sourceTree = "<group>"; };
+		2C9119AA214E9D9A00A3B6DA /* VENNetworkTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENNetworkTool.h; sourceTree = "<group>"; };
+		2C9119AB214E9D9A00A3B6DA /* VENNetworkTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENNetworkTool.m; sourceTree = "<group>"; };
+		2C9119B8214F37C400A3B6DA /* VENRegisterModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENRegisterModel.h; sourceTree = "<group>"; };
+		2C9119B9214F37C400A3B6DA /* VENRegisterModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENRegisterModel.m; sourceTree = "<group>"; };
 		30373FDA5AEE35685B2A31EA /* libPods-EDAWCulture.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EDAWCulture.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		468B60404D35322239A897EB /* Pods-EDAWCulture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.release.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.release.xcconfig"; sourceTree = "<group>"; };
 		F0140756D4E8111BE336F024 /* Pods-EDAWCulture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EDAWCulture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EDAWCulture/Pods-EDAWCulture.debug.xcconfig"; sourceTree = "<group>"; };
@@ -765,6 +771,8 @@
 			children = (
 				2C911982214D570000A3B6DA /* VENUserTypeManager.h */,
 				2C911981214D570000A3B6DA /* VENUserTypeManager.m */,
+				2C9119AA214E9D9A00A3B6DA /* VENNetworkTool.h */,
+				2C9119AB214E9D9A00A3B6DA /* VENNetworkTool.m */,
 			);
 			path = SharedManager;
 			sourceTree = "<group>";
@@ -772,8 +780,8 @@
 		2C911984214DF4E700A3B6DA /* Register&Login */ = {
 			isa = PBXGroup;
 			children = (
-				2C911992214DF4E700A3B6DA /* Model */,
-				2C911993214DF4E700A3B6DA /* View */,
+				2C9119B1214F374100A3B6DA /* Login */,
+				2C9119AD214F36F600A3B6DA /* Register */,
 				2C911985214DF4E700A3B6DA /* Controller */,
 			);
 			path = "Register&Login";
@@ -782,12 +790,103 @@
 		2C911985214DF4E700A3B6DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2C911986214DF4E700A3B6DA /* VENLoginViewController.h */,
-				2C91198D214DF4E700A3B6DA /* VENLoginViewController.m */,
-				2C911989214DF4E700A3B6DA /* VENLoginViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C9119AD214F36F600A3B6DA /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				2C9119B0214F371800A3B6DA /* Model */,
+				2C9119AE214F371800A3B6DA /* View */,
+				2C9119AF214F371800A3B6DA /* Controller */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		2C9119AE214F371800A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C911996214DF4E700A3B6DA /* VENRegisterTableViewCell.h */,
+				2C911995214DF4E700A3B6DA /* VENRegisterTableViewCell.m */,
+				2C911994214DF4E700A3B6DA /* VENRegisterTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C9119AF214F371800A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				2C91198E214DF4E700A3B6DA /* VENRegisterViewController.h */,
 				2C911988214DF4E700A3B6DA /* VENRegisterViewController.m */,
 				2C91198B214DF4E700A3B6DA /* VENRegisterViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C9119B0214F371800A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C9119B8214F37C400A3B6DA /* VENRegisterModel.h */,
+				2C9119B9214F37C400A3B6DA /* VENRegisterModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C9119B1214F374100A3B6DA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2C9119B5214F377A00A3B6DA /* Main */,
+				2C9119B6214F378300A3B6DA /* FindPassword */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		2C9119B2214F375000A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C911986214DF4E700A3B6DA /* VENLoginViewController.h */,
+				2C91198D214DF4E700A3B6DA /* VENLoginViewController.m */,
+				2C911989214DF4E700A3B6DA /* VENLoginViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2C9119B3214F375500A3B6DA /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C9119B4214F375D00A3B6DA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C9119B5214F377A00A3B6DA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2C9119B4214F375D00A3B6DA /* Model */,
+				2C9119B3214F375500A3B6DA /* View */,
+				2C9119B2214F375000A3B6DA /* Controller */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2C9119B6214F378300A3B6DA /* FindPassword */ = {
+			isa = PBXGroup;
+			children = (
+				2C9119B7214F379300A3B6DA /* Controller */,
+			);
+			path = FindPassword;
+			sourceTree = "<group>";
+		};
+		2C9119B7214F379300A3B6DA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				2C911990214DF4E700A3B6DA /* VENFindPasswordViewController.h */,
 				2C911987214DF4E700A3B6DA /* VENFindPasswordViewController.m */,
 				2C91198F214DF4E700A3B6DA /* VENFindPasswordViewController.xib */,
@@ -796,23 +895,6 @@
 				2C91198A214DF4E700A3B6DA /* VENSettingPasswordViewController.xib */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2C911992214DF4E700A3B6DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		2C911993214DF4E700A3B6DA /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2C911994214DF4E700A3B6DA /* VENRegisterTableViewCell.xib */,
-				2C911995214DF4E700A3B6DA /* VENRegisterTableViewCell.m */,
-				2C911996214DF4E700A3B6DA /* VENRegisterTableViewCell.h */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		72C19E9E47CBD0914B259676 /* Pods */ = {
@@ -954,6 +1036,7 @@
 			files = (
 				2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */,
 				2C7144ED214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m in Sources */,
+				2C9119BA214F37C400A3B6DA /* VENRegisterModel.m in Sources */,
 				2C91197F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m in Sources */,
 				2C911971214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m in Sources */,
 				2C7144F0214B9E340034CE94 /* VENWorkAndLuckViewController.m in Sources */,
@@ -980,6 +1063,7 @@
 				2C7144EF214B9E340034CE94 /* VENWorkAndLuckDetailPopupView.m in Sources */,
 				2C71449A214B82A90034CE94 /* main.m in Sources */,
 				2C911938214D565600A3B6DA /* VENCulturalCircleApprenticeTableViewCell.m in Sources */,
+				2C9119AC214E9D9A00A3B6DA /* VENNetworkTool.m in Sources */,
 				2C91197E214D56D300A3B6DA /* VENMyOrderCategoryView.m in Sources */,
 				2C911978214D56D300A3B6DA /* VENMyFocusingTableViewCell.m in Sources */,
 				2C91197A214D56D300A3B6DA /* VENMyOrderFinishedViewController.m in Sources */,
