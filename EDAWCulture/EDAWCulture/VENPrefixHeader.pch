@@ -23,6 +23,7 @@
 
 #import "VENUserTypeManager.h"
 #import "VENNetworkTool.h"
+#import "VENMBProgressHUDManager.h"
 
 
 #define kMainScreenFrameRect [UIScreen mainScreen].bounds

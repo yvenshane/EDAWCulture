@@ -8,10 +8,16 @@
 
 #import "VENRegisterViewController.h"
 #import "VENRegisterTableViewCell.h"
-#import "VENRegisterModel.h"
+#import "VENCityPickerView.h"
 
 @interface VENRegisterViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *leftTextFieldPlaceholderTextMuArr;
+
+@property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) NSTimer *countDownTimer;
+
+@property (nonatomic, strong) VENCityPickerView *cityPickerView;
 
 @end
 
@@ -25,20 +31,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setupTabbleView];
-    [self loadRegisterViewData];
+//    [self loadRegisterViewData];
 }
 
 - (void)loadRegisterViewData {
-    [[VENNetworkTool sharedNetworkToolManager] GET:@"index/province" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"%@", responseObject);
-        
-        VENRegisterModel *model = [VENRegisterModel yy_modelWithJSON:responseObject[@"data"]];
-        
-        NSLog(@"%@", model.provinces[1][@"province"]);
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
-    }];
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -48,6 +45,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VENRegisterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.leftTextField.placeholder = self.leftTextFieldPlaceholderTextMuArr[indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.row == 1) {
         cell.leftTextField.userInteractionEnabled = YES;
@@ -65,6 +63,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
         cell.rightLabel.hidden = YES;
         cell.rightImageView.hidden = YES;
         cell.leftTextFieldLayoutConstraint.constant = 110.0f;
+        
+        [cell.rightButton addTarget:self action:@selector(getVerificationCodeClick) forControlEvents:UIControlEventTouchUpInside];
     } else if (indexPath.row == 3) {
         cell.leftTextField.userInteractionEnabled = NO;
         cell.rightButton.hidden = YES;
@@ -83,12 +83,80 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return cell;
 }
 
+- (void)getVerificationCodeClick { // 获取验证码
+    VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    [[VENNetworkTool sharedNetworkToolManager] GET:@"index/smsCode" parameters:@{@"phone": cell.leftTextField.text} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+
+        [[VENMBProgressHUDManager sharedMBProgressHUDManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            self.seconds = 60;
+            self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.row == 3) { // 所在地区
+        
+        NSMutableDictionary *tempMuDict = [NSMutableDictionary dictionary];
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+
+        // 请求省份数据
+        [[VENNetworkTool sharedNetworkToolManager] GET:@"index/province" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            [tempMuDict setObject:responseObject[@"data"][@"provinces"] forKey:@"provinces"];
+            [parameters setObject:tempMuDict[@"provinces"][0][@"province_id"] forKey:@"provinceId"];
+
+            // 请求城市数据
+            [[VENNetworkTool sharedNetworkToolManager] GET:@"index/city" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                
+                [tempMuDict setObject:responseObject[@"data"][@"cities"] forKey:@"cities"];
+                
+                
+                if (self.cityPickerView == nil) {
+                    VENCityPickerView *cityPickerView = [[VENCityPickerView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - 300 + statusNavHeight, kMainScreenWidth, 300) forData:tempMuDict];
+                    [self.view addSubview:cityPickerView];
+                    self.cityPickerView = cityPickerView;
+                }
+
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                
+            }];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+        }];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 49;
+}
+
+- (void)timeFireMethod {
+    _seconds--;
+    
+    VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    
+    cell.rightButton.userInteractionEnabled = NO;
+    
+    // titleLabel.text 解决频繁刷新 Button 闪烁的问题
+    cell.rightButton.titleLabel.text = [NSString stringWithFormat:@"%ld秒后重新获取", (long)_seconds];
+    [cell.rightButton setTitle:[NSString stringWithFormat:@"%ld秒后重新获取", (long)_seconds] forState:UIControlStateNormal];
+    
+    if(_seconds == 0) {
+        [_countDownTimer invalidate];
+        [cell.rightButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        cell.rightButton.userInteractionEnabled = YES;
+    }
 }
 
 - (void)setupTabbleView {
@@ -119,6 +187,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     registerButton.layer.masksToBounds = YES;
     [registerButton addTarget:self action:@selector(registerButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:registerButton];
+    
+    _tableView = tableView;
 }
 
 - (void)registerButtonClick {
