@@ -56,6 +56,16 @@
     UIView *leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 49)];
     self.passwordTextField.leftView = leftView2;
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.passwordTextField.secureTextEntry = YES;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"0" forKey:@"USER_TYPE"];
+    
+    NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
+    
+    // Test
+    [self test];
 }
 
 - (void)closePageButtonClick {
@@ -68,6 +78,13 @@
     self.userLoginImageView.backgroundColor = COLOR_THEME;
     self.userLoginImageView.hidden = NO;
     self.masterLoginImageView.hidden = YES;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"0" forKey:@"USER_TYPE"];
+    
+    NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
+    // Test
+    [self test];
 }
 
 - (void)masterLoginButtonClick {
@@ -76,10 +93,41 @@
     self.masterLoginImageView.backgroundColor = COLOR_THEME;
     self.userLoginImageView.hidden = YES;
     self.masterLoginImageView.hidden = NO;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"1" forKey:@"USER_TYPE"];
+    
+    NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
+    // Test
+    [self test];
 }
 
 - (void)loginButtonClick {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
+    
+    NSString *urlStr = [[VENUserTypeManager sharedManager] isMaster] ? @"index/masterLogin" : @"index/userLogin";
+    NSDictionary *parameters = @{@"phone": self.phoneNumberTextField.text,
+                                 @"password": self.passwordTextField.text};
+    
+    [[VENNetworkTool sharedManager] POST:urlStr parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            [self dismissViewControllerAnimated:YES completion:^{
+
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:responseObject[@"data"] forKey:@"Login"];
+                
+                NSLog(@"Login - %d", [[VENUserTypeManager sharedManager] isLogin]);
+            }];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (void)registerButtonClick {
@@ -95,6 +143,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)test {
+    self.phoneNumberTextField.text = [[VENUserTypeManager sharedManager] isMaster] ? @"15215600000" : @"15305532355";
+    self.passwordTextField.text = [[VENUserTypeManager sharedManager] isMaster] ? @"111111" : @"123456";
 }
 
 /*

@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface VENUserTypeManager : NSObject
-+ (instancetype)sharedUserTypeManager;
++ (instancetype)sharedManager;
 - (BOOL)isMaster;
+- (BOOL)isLogin;
 
 @end

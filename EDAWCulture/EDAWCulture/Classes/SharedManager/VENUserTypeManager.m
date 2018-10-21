@@ -10,7 +10,7 @@
 
 @implementation VENUserTypeManager
 
-+ (instancetype)sharedUserTypeManager {
++ (instancetype)sharedManager {
     
     static id instance;
     static dispatch_once_t onceToken;
@@ -22,6 +22,10 @@
 
 - (BOOL)isMaster {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:@"USER_TYPE"] isEqualToString:@"1"] ? YES : NO;
+}
+
+- (BOOL)isLogin {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"Login"] ? YES : NO;
 }
 
 @end

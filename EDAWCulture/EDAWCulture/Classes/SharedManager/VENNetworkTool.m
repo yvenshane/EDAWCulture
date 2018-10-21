@@ -10,7 +10,7 @@
 
 @implementation VENNetworkTool
 
-+ (instancetype)sharedNetworkToolManager {
++ (instancetype)sharedManager {
     static VENNetworkTool *instance;
     
     static dispatch_once_t onceToken;

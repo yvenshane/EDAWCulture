@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSTimer *countDownTimer;
 
 @property (nonatomic, strong) VENCityPickerView *cityPickerView;
+@property (nonatomic, copy) NSString *provinceID;
+@property (nonatomic, copy) NSString *cityID;
 
 @end
 
@@ -62,7 +64,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         cell.rightButton.hidden = NO;
         cell.rightLabel.hidden = YES;
         cell.rightImageView.hidden = YES;
-        cell.leftTextFieldLayoutConstraint.constant = 110.0f;
+        cell.leftTextFieldLayoutConstraint.constant = 135.0f;
         
         [cell.rightButton addTarget:self action:@selector(getVerificationCodeClick) forControlEvents:UIControlEventTouchUpInside];
     } else if (indexPath.row == 3) {
@@ -86,11 +88,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)getVerificationCodeClick { // 获取验证码
     VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    [[VENNetworkTool sharedNetworkToolManager] GET:@"index/smsCode" parameters:@{@"phone": cell.leftTextField.text} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [[VENNetworkTool sharedManager] GET:@"index/smsCode" parameters:@{@"phone": cell.leftTextField.text} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@", responseObject);
 
-        [[VENMBProgressHUDManager sharedMBProgressHUDManager] showText:responseObject[@"msg"]];
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
         
         if ([responseObject[@"code"] integerValue] == 1) {
             self.seconds = 60;
@@ -110,19 +112,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
         NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
 
         // 请求省份数据
-        [[VENNetworkTool sharedNetworkToolManager] GET:@"index/province" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [[VENNetworkTool sharedManager] GET:@"index/province" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
             [tempMuDict setObject:responseObject[@"data"][@"provinces"] forKey:@"provinces"];
             [parameters setObject:tempMuDict[@"provinces"][0][@"province_id"] forKey:@"provinceId"];
 
             // 请求城市数据
-            [[VENNetworkTool sharedNetworkToolManager] GET:@"index/city" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [[VENNetworkTool sharedManager] GET:@"index/city" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 
                 [tempMuDict setObject:responseObject[@"data"][@"cities"] forKey:@"cities"];
                 
                 
                 if (self.cityPickerView == nil) {
-                    VENCityPickerView *cityPickerView = [[VENCityPickerView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - 300 + statusNavHeight, kMainScreenWidth, 300) forData:tempMuDict];
+                    VENCityPickerView *cityPickerView = [[VENCityPickerView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - 260, kMainScreenWidth, 260) forData:tempMuDict];
+                    cityPickerView.block = ^(NSString *str) {
+                        if (![str isEqualToString:@"cancel"]) {
+                            VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
+                            
+                            NSArray *tempArr = [str componentsSeparatedByString:@","];
+                            
+                            cell.leftTextField.text = tempArr[0];
+                            self.provinceID = tempArr[1];
+                            self.cityID = tempArr[2];
+                        }
+                        [self.cityPickerView removeFromSuperview];
+                        self.cityPickerView = nil;
+                    };
                     [self.view addSubview:cityPickerView];
                     self.cityPickerView = cityPickerView;
                 }
@@ -192,7 +207,42 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)registerButtonClick {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    
+    VENRegisterTableViewCell *nameCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    VENRegisterTableViewCell *phoneCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    VENRegisterTableViewCell *verificationCodeCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    
+    VENRegisterTableViewCell *passwordCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+    
+    VENRegisterTableViewCell *password2Cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:5 inSection:0]];
+    
+    [parameters setObject:nameCell.leftTextField.text forKey:@"nickname"];
+    [parameters setObject:phoneCell.leftTextField.text forKey:@"phone"];
+    [parameters setObject:verificationCodeCell.leftTextField.text forKey:@"smsCode"];
+    [parameters setObject:self.provinceID == nil ? @"" : self.provinceID forKey:@"provinceId"];
+    [parameters setObject:self.cityID == nil ? @"" : self.cityID forKey:@"cityId"];
+    [parameters setObject:passwordCell.leftTextField.text forKey:@"password"];
+    [parameters setObject:password2Cell.leftTextField.text forKey:@"password2"];
+    
+    NSLog(@"%@", parameters);
+    
+    [[VENNetworkTool sharedManager] POST:@"index/userRegister" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (IBAction)leftBarButtonItemClick:(id)sender {

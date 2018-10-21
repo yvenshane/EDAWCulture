@@ -36,11 +36,15 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     if (viewController.tabBarItem.tag == 3) {
-        VENLoginViewController *vc = [[VENLoginViewController alloc] init];
-        [self presentViewController:vc animated:YES completion:nil];
-        return NO;
+        if ([[VENUserTypeManager sharedManager] isLogin]) {
+            return YES;
+        } else {
+            VENLoginViewController *vc = [[VENLoginViewController alloc] init];
+            [self presentViewController:vc animated:YES completion:nil];
+            return NO;
+        }
     } else {
-
+        
         return YES;
     }
 }

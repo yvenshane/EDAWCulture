@@ -21,8 +21,14 @@
 @property (nonatomic, strong) NSMutableArray *provincesNameMuArr;
 @property (nonatomic, strong) NSMutableArray *citiesNameMuArr;
 
+@property (nonatomic, strong) NSMutableArray *provincesIDMuArr;
+@property (nonatomic, strong) NSMutableArray *citiesIDMuArr;
+
 @property (nonatomic, copy) NSString *provinceName;
 @property (nonatomic, copy) NSString *cityName;
+
+@property (nonatomic, copy) NSString *provinceID;
+@property (nonatomic, copy) NSString *cityID;
 
 @end
 
@@ -42,9 +48,19 @@
             [self.citiesNameMuArr addObject:dict[@"city"]];
         }
         
+        for (NSDictionary *dict in dataDict[@"provinces"]) {
+            [self.provincesIDMuArr addObject:dict[@"province_id"]];
+        }
+        
+        for (NSDictionary *dict in dataDict[@"cities"]) {
+            [self.citiesIDMuArr addObject:dict[@"city_id"]];
+        }
+        
         self.provinceName = self.provincesNameMuArr[0];
         self.cityName = self.citiesNameMuArr[0];
-        NSLog(@"%@-%@", self.provinceName, self.cityName);
+        
+        self.provinceID = self.provincesIDMuArr[0];
+        self.cityID = self.citiesIDMuArr[0];
         
         UIPickerView *pickerView = [[UIPickerView alloc] init];
         pickerView.delegate = self;
@@ -83,11 +99,11 @@
 }
 
 - (void)cancelButtonClick {
-    NSLog(@"取消");
+    self.block(@"cancel");
 }
 
 - (void)finishButtonClick {
-    NSLog(@"%@-%@", self.provinceName, self.cityName);
+    self.block([NSString stringWithFormat:@"%@-%@,%@,%@", self.provinceName, self.cityName, self.provinceID, self.cityID]);
 }
 
 - (void)layoutSubviews {
@@ -96,7 +112,7 @@
     _backgroundView.frame = CGRectMake(0, 0, kMainScreenWidth, 44);
     _cancelButton.frame = CGRectMake(0, 0, 88, 44);
     _finishButton.frame = CGRectMake(kMainScreenWidth - 88, 0, 88, 44);
-    _pickerView.frame = CGRectMake(0, 30, kMainScreenWidth, 270);
+    _pickerView.frame = CGRectMake(0, 44, kMainScreenWidth, 216);
     _lineView.frame = CGRectMake(0, 43, kMainScreenWidth, 1);
 }
 
@@ -119,12 +135,17 @@
         [parameters setObject:self.provincesMuArr[row][@"province_id"] forKey:@"provinceId"];
 
         // 请求城市数据
-        [[VENNetworkTool sharedNetworkToolManager] GET:@"index/city" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [[VENNetworkTool sharedManager] GET:@"index/city" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
             [self.citiesNameMuArr removeAllObjects];
+            [self.citiesIDMuArr removeAllObjects];
             
             for (NSDictionary *dict in responseObject[@"data"][@"cities"]) {
                 [self.citiesNameMuArr addObject:dict[@"city"]];
+            }
+            
+            for (NSDictionary *dict in responseObject[@"data"][@"cities"]) {
+                [self.citiesIDMuArr addObject:dict[@"city_id"]];
             }
             
             // 刷新城市列表
@@ -134,13 +155,19 @@
             
             self.cityName = self.citiesNameMuArr[0];
             
+            self.cityID = self.citiesIDMuArr[0];
+            
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 
         }];
         
         self.provinceName = self.provincesNameMuArr[row];
+        
+        self.provinceID = self.provincesIDMuArr[row];
     } else {
         self.cityName = self.citiesNameMuArr[row];
+        
+        self.cityID = self.citiesIDMuArr[row];
     }
 }
 
@@ -170,6 +197,20 @@
         _citiesNameMuArr = [NSMutableArray array];
     }
     return _citiesNameMuArr;
+}
+
+- (NSMutableArray *)provincesIDMuArr {
+    if (_provincesIDMuArr == nil) {
+        _provincesIDMuArr = [NSMutableArray array];
+    }
+    return _provincesIDMuArr;
+}
+
+- (NSMutableArray *)citiesIDMuArr {
+    if (_citiesIDMuArr == nil) {
+        _citiesIDMuArr = [NSMutableArray array];
+    }
+    return _citiesIDMuArr;
 }
 
 /*

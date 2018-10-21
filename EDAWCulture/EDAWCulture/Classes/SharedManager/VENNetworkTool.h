@@ -9,6 +9,6 @@
 #import "AFHTTPSessionManager.h"
 
 @interface VENNetworkTool : AFHTTPSessionManager
-+ (instancetype)sharedNetworkToolManager;
++ (instancetype)sharedManager;
 
 @end

@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+typedef void (^citySelectorBlock)(NSString *);
 @interface VENCityPickerView : UIView
+@property (nonatomic, copy) citySelectorBlock block;
+
 - (instancetype)initWithFrame:(CGRect)frame forData:(NSDictionary *)dataDict;
 
 @end

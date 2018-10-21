@@ -10,7 +10,7 @@
 
 @implementation VENMBProgressHUDManager
 
-+ (instancetype)sharedMBProgressHUDManager {
++ (instancetype)sharedManager {
     static VENMBProgressHUDManager *instance;
     
     static dispatch_once_t onceToken;
