@@ -10,6 +10,7 @@
 #import "VENRegisterTableViewCell.h"
 
 @interface VENSettingPasswordViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -75,10 +76,44 @@ static NSString *cellIdentifier = @"cellIdentifier";
     submitButton.layer.masksToBounds = YES;
     [submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:submitButton];
+    
+    self.tableView = tableView;
 }
 
 - (void)submitButtonClick {
-    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    VENRegisterTableViewCell *passwordCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    VENRegisterTableViewCell *password2Cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    if ([[VENClassEmptyManager sharedManager] isEmptyString:passwordCell.leftTextField.text]) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请输入新密码"];
+        return;
+    }
+    
+    if ([[VENClassEmptyManager sharedManager] isEmptyString:password2Cell.leftTextField.text]) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请确认新密码"];
+        return;
+    }
+    
+    NSDictionary *parameters = @{@"phone": self.phone,
+                                 @"smsCode": self.smsCode,
+                                 @"password": passwordCell.leftTextField.text,
+                                 @"password2": password2Cell.leftTextField.text};
+    
+    [[VENNetworkTool sharedManager] POST:@"index/userForgot" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (IBAction)leftBarButtonItemClick:(id)sender {

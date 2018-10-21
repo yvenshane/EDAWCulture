@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface VENSettingPasswordViewController : UIViewController
+@property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy) NSString *smsCode;
 
 @end

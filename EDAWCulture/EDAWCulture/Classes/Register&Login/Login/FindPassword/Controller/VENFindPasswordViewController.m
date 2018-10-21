@@ -11,6 +11,9 @@
 #import "VENSettingPasswordViewController.h"
 
 @interface VENFindPasswordViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) NSTimer *countDownTimer;
 
 @end
 
@@ -50,10 +53,52 @@ static NSString *cellIdentifier = @"cellIdentifier";
         cell.rightButton.hidden = NO;
         cell.rightLabel.hidden = YES;
         cell.rightImageView.hidden = YES;
-        cell.leftTextFieldLayoutConstraint.constant = 110.0f;
+        cell.leftTextFieldLayoutConstraint.constant = 135.0f;
+        
+        [cell.rightButton addTarget:self action:@selector(rightButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
+}
+
+- (void)rightButtonClick { // 获取验证码
+    VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    NSDictionary *parameters = @{@"phone": cell.leftTextField.text,
+                                 @"from": @"forgot"};
+    
+    [[VENNetworkTool sharedManager] GET:@"index/smsCode" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            self.seconds = 60;
+            self.countDownTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod) userInfo:nil repeats:YES];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+- (void)timeFireMethod {
+    _seconds--;
+    
+    VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    cell.rightButton.userInteractionEnabled = NO;
+    
+    // titleLabel.text 解决频繁刷新 Button 闪烁的问题
+    cell.rightButton.titleLabel.text = [NSString stringWithFormat:@"%ld秒后重新获取", (long)_seconds];
+    [cell.rightButton setTitle:[NSString stringWithFormat:@"%ld秒后重新获取", (long)_seconds] forState:UIControlStateNormal];
+    
+    if(_seconds == 0) {
+        [_countDownTimer invalidate];
+        [cell.rightButton setTitle:@"获取验证码" forState:UIControlStateNormal];
+        cell.rightButton.userInteractionEnabled = YES;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,10 +133,29 @@ static NSString *cellIdentifier = @"cellIdentifier";
     nextButton.layer.masksToBounds = YES;
     [nextButton addTarget:self action:@selector(nextButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:nextButton];
+    
+    self.tableView = tableView;
 }
 
 - (void)nextButtonClick {
+    
+    VENRegisterTableViewCell *phoneCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    VENRegisterTableViewCell *smsCodeCell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    
+    if ([[VENClassEmptyManager sharedManager] isEmptyString:phoneCell.leftTextField.text]) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请输入手机号码"];
+        return;
+    }
+    
+    if ([[VENClassEmptyManager sharedManager] isEmptyString:smsCodeCell.leftTextField.text]) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请输入验证码"];
+        return;
+    }
+    
     VENSettingPasswordViewController *vc = [[VENSettingPasswordViewController alloc] init];
+    vc.phone = phoneCell.leftTextField.text;
+    vc.smsCode = smsCodeCell.leftTextField.text;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

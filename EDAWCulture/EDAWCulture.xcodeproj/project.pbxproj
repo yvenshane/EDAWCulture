@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C1213C5217CB96300644966 /* VENClassEmptyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1213C4217CB96300644966 /* VENClassEmptyManager.m */; };
 		2C71448C214B82A70034CE94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C71448B214B82A70034CE94 /* AppDelegate.m */; };
 		2C714494214B82A90034CE94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C714493214B82A90034CE94 /* Assets.xcassets */; };
 		2C714497214B82A90034CE94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C714495214B82A90034CE94 /* LaunchScreen.storyboard */; };
@@ -65,6 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C1213C3217CB96300644966 /* VENClassEmptyManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENClassEmptyManager.h; sourceTree = "<group>"; };
+		2C1213C4217CB96300644966 /* VENClassEmptyManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENClassEmptyManager.m; sourceTree = "<group>"; };
 		2C714487214B82A70034CE94 /* EDAWCulture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EDAWCulture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C71448A214B82A70034CE94 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2C71448B214B82A70034CE94 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -778,6 +781,8 @@
 				2C911981214D570000A3B6DA /* VENUserTypeManager.m */,
 				2C9119AA214E9D9A00A3B6DA /* VENNetworkTool.h */,
 				2C9119AB214E9D9A00A3B6DA /* VENNetworkTool.m */,
+				2C1213C3217CB96300644966 /* VENClassEmptyManager.h */,
+				2C1213C4217CB96300644966 /* VENClassEmptyManager.m */,
 			);
 			path = SharedManager;
 			sourceTree = "<group>";
@@ -1033,6 +1038,7 @@
 			files = (
 				2C7144C2214B9A110034CE94 /* VENCulturalCircleViewController.m in Sources */,
 				2C7144ED214B9E340034CE94 /* VENWorkAndLuckDetailViewController.m in Sources */,
+				2C1213C5217CB96300644966 /* VENClassEmptyManager.m in Sources */,
 				2C91197F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m in Sources */,
 				2C751447216B008300AC0D97 /* VENCityPickerView.m in Sources */,
 				2C911971214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m in Sources */,

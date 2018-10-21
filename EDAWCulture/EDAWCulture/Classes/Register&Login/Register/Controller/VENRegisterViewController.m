@@ -88,7 +88,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)getVerificationCodeClick { // 获取验证码
     VENRegisterTableViewCell *cell = (VENRegisterTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    [[VENNetworkTool sharedManager] GET:@"index/smsCode" parameters:@{@"phone": cell.leftTextField.text} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSDictionary *parameters = @{@"phone": cell.leftTextField.text,
+                                 @"from": @"register"};
+    
+    [[VENNetworkTool sharedManager] GET:@"index/smsCode" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@", responseObject);
 
