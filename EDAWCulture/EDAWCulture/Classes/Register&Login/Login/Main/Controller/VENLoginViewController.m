@@ -9,6 +9,7 @@
 #import "VENLoginViewController.h"
 #import "VENRegisterViewController.h"
 #import "VENFindPasswordViewController.h"
+#import "VENTabBarController.h"
 
 @interface VENLoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *closePageButton;
@@ -59,8 +60,7 @@
     
     self.passwordTextField.secureTextEntry = YES;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"0" forKey:@"USER_TYPE"];
+
     
     NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
     
@@ -80,7 +80,7 @@
     self.masterLoginImageView.hidden = YES;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"0" forKey:@"USER_TYPE"];
+    [defaults setObject:@"1" forKey:@"USER_TYPE"];
     
     NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
     // Test
@@ -95,7 +95,7 @@
     self.masterLoginImageView.hidden = NO;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"1" forKey:@"USER_TYPE"];
+    [defaults setObject:@"2" forKey:@"USER_TYPE"];
     
     NSLog(@"USER_TYPE - %d", [[VENUserTypeManager sharedManager] isMaster]);
     // Test
@@ -117,13 +117,20 @@
         [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
         
         if ([responseObject[@"code"] integerValue] == 1) {
-            [self dismissViewControllerAnimated:YES completion:^{
-
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:responseObject[@"data"] forKey:@"Login"];
-                
-                NSLog(@"Login - %d", [[VENUserTypeManager sharedManager] isLogin]);
-            }];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+            NSUserDefaults *defaults1 = [NSUserDefaults standardUserDefaults];
+            [defaults1 setObject:[[VENUserTypeManager sharedManager] isMaster] ? @"2" : @"1" forKey:@"USER_TYPE"];
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:responseObject[@"data"] forKey:@"Login"];
+            
+            NSLog(@"Login - %d", [[VENUserTypeManager sharedManager] isLogin]);
+            
+            [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:NO completion:nil];
+            VENTabBarController *vc = [[VENTabBarController alloc]init];
+            [UIApplication sharedApplication].keyWindow.rootViewController = vc;
+            
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2C1213C5217CB96300644966 /* VENClassEmptyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1213C4217CB96300644966 /* VENClassEmptyManager.m */; };
+		2C1213CC217CBF9C00644966 /* VENHomePageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1213CA217CBF9C00644966 /* VENHomePageModel.m */; };
+		2C2F5A38218190CD00718968 /* VENConfirmationOfOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F5A37218190CD00718968 /* VENConfirmationOfOrderViewController.m */; };
+		2C2F5A3D218191BC00718968 /* VENConfirmationOfOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2F5A3B218191BC00718968 /* VENConfirmationOfOrderTableViewCell.m */; };
+		2C2F5A3E218191BC00718968 /* VENConfirmationOfOrderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C2F5A3C218191BC00718968 /* VENConfirmationOfOrderTableViewCell.xib */; };
 		2C71448C214B82A70034CE94 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C71448B214B82A70034CE94 /* AppDelegate.m */; };
 		2C714494214B82A90034CE94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C714493214B82A90034CE94 /* Assets.xcassets */; };
 		2C714497214B82A90034CE94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C714495214B82A90034CE94 /* LaunchScreen.storyboard */; };
@@ -68,6 +72,13 @@
 /* Begin PBXFileReference section */
 		2C1213C3217CB96300644966 /* VENClassEmptyManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENClassEmptyManager.h; sourceTree = "<group>"; };
 		2C1213C4217CB96300644966 /* VENClassEmptyManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENClassEmptyManager.m; sourceTree = "<group>"; };
+		2C1213CA217CBF9C00644966 /* VENHomePageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENHomePageModel.m; sourceTree = "<group>"; };
+		2C1213CB217CBF9C00644966 /* VENHomePageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENHomePageModel.h; sourceTree = "<group>"; };
+		2C2F5A36218190CD00718968 /* VENConfirmationOfOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENConfirmationOfOrderViewController.h; sourceTree = "<group>"; };
+		2C2F5A37218190CD00718968 /* VENConfirmationOfOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENConfirmationOfOrderViewController.m; sourceTree = "<group>"; };
+		2C2F5A3A218191BC00718968 /* VENConfirmationOfOrderTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VENConfirmationOfOrderTableViewCell.h; sourceTree = "<group>"; };
+		2C2F5A3B218191BC00718968 /* VENConfirmationOfOrderTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VENConfirmationOfOrderTableViewCell.m; sourceTree = "<group>"; };
+		2C2F5A3C218191BC00718968 /* VENConfirmationOfOrderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VENConfirmationOfOrderTableViewCell.xib; sourceTree = "<group>"; };
 		2C714487214B82A70034CE94 /* EDAWCulture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EDAWCulture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C71448A214B82A70034CE94 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2C71448B214B82A70034CE94 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -183,6 +194,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1213C9217CBF9C00644966 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2C1213CB217CBF9C00644966 /* VENHomePageModel.h */,
+				2C1213CA217CBF9C00644966 /* VENHomePageModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2C2F5A352181907A00718968 /* ConfirmationOfOrder */ = {
+			isa = PBXGroup;
+			children = (
+				2C2F5A392181917600718968 /* View */,
+				2C2F5A3F2181993900718968 /* Controller */,
+			);
+			path = ConfirmationOfOrder;
+			sourceTree = "<group>";
+		};
+		2C2F5A392181917600718968 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2C2F5A3A218191BC00718968 /* VENConfirmationOfOrderTableViewCell.h */,
+				2C2F5A3B218191BC00718968 /* VENConfirmationOfOrderTableViewCell.m */,
+				2C2F5A3C218191BC00718968 /* VENConfirmationOfOrderTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2C2F5A3F2181993900718968 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2C2F5A36218190CD00718968 /* VENConfirmationOfOrderViewController.h */,
+				2C2F5A37218190CD00718968 /* VENConfirmationOfOrderViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		2C71447E214B82A70034CE94 = {
 			isa = PBXGroup;
 			children = (
@@ -341,13 +389,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		2C7144B4214B999E0034CE94 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		2C7144B5214B999E0034CE94 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +449,7 @@
 		2C7144D5214B9DF00034CE94 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				2C7144B4214B999E0034CE94 /* Model */,
+				2C1213C9217CBF9C00644966 /* Model */,
 				2C7144B5214B999E0034CE94 /* View */,
 				2C7144B3214B999E0034CE94 /* Controller */,
 			);
@@ -420,6 +461,7 @@
 			children = (
 				2C7144E6214B9E340034CE94 /* List */,
 				2C7144DB214B9E340034CE94 /* Detail */,
+				2C2F5A352181907A00718968 /* ConfirmationOfOrder */,
 				2C7144D7214B9E340034CE94 /* CheckoutSuccess */,
 			);
 			path = "Work&Luck";
@@ -650,8 +692,8 @@
 			isa = PBXGroup;
 			children = (
 				2C911954214D56D300A3B6DA /* VENMyFocusingTableViewCell.h */,
-				2C911955214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib */,
 				2C911956214D56D300A3B6DA /* VENMyFocusingTableViewCell.m */,
+				2C911955214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -987,6 +1029,7 @@
 				2C714497214B82A90034CE94 /* LaunchScreen.storyboard in Resources */,
 				2C714494214B82A90034CE94 /* Assets.xcassets in Resources */,
 				2C911977214D56D300A3B6DA /* VENMyFocusingTableViewCell.xib in Resources */,
+				2C2F5A3E218191BC00718968 /* VENConfirmationOfOrderTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,9 +1093,12 @@
 				2C7144D3214B9DBE0034CE94 /* VENHomePageTableViewCell.m in Sources */,
 				2C7144D2214B9DBE0034CE94 /* VENHomePageHeaderViewButton.m in Sources */,
 				2C911937214D565600A3B6DA /* VENCulturalCircleApprenticeViewController.m in Sources */,
+				2C2F5A3D218191BC00718968 /* VENConfirmationOfOrderTableViewCell.m in Sources */,
 				2C9119A0214DF4E800A3B6DA /* VENRegisterTableViewCell.m in Sources */,
 				2C91197B214D56D300A3B6DA /* VENMyOrderViewController.m in Sources */,
 				2C7144EC214B9E340034CE94 /* VENCheckoutSuccessViewController.m in Sources */,
+				2C2F5A38218190CD00718968 /* VENConfirmationOfOrderViewController.m in Sources */,
+				2C1213CC217CBF9C00644966 /* VENHomePageModel.m in Sources */,
 				2C91199C214DF4E800A3B6DA /* VENSettingPasswordViewController.m in Sources */,
 				2C911979214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m in Sources */,
 				2C91197D214D56D300A3B6DA /* VENMyOrderTableViewCell.m in Sources */,

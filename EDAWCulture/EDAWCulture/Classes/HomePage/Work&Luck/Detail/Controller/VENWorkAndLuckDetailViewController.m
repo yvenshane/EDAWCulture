@@ -7,49 +7,64 @@
 //
 
 #import "VENWorkAndLuckDetailViewController.h"
-#import "VENWorkAndLuckDetailTableViewCell.h"
 #import "VENWorkAndLuckDetailPopupView.h"
 #import "VENCheckoutSuccessViewController.h"
+#import "VENHomePageModel.h"
+#import "VENConfirmationOfOrderViewController.h"
 
-@interface VENWorkAndLuckDetailViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, assign) CGFloat cellHeight;
+@interface VENWorkAndLuckDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) VENWorkAndLuckDetailPopupView *popupView;
+@property (nonatomic, copy) NSDictionary *dataSourceDict;
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *tableHeaderView;
+@property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) VENHomePageModel *choiceModel;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *level;
+@property (nonatomic, copy) NSString *school;
+@property (nonatomic, copy) NSString *imageURL;
 
 @end
 
-static NSString *cellIdentifier = @"cellIdentifier";
 @implementation VENWorkAndLuckDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = @"事业财运";
-    
     self.view.backgroundColor = [UIColor whiteColor];
-
-    // 计算 cell 高度
-    VENWorkAndLuckDetailTableViewCell *cell = [[VENWorkAndLuckDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell layoutSubviews];
-    self.cellHeight = cell.maxHeight;
     
-    [self setupTabbleView];
-    [self setupBottomToolBar];
+    [self loadData];
+}
+
+- (void)loadData {
+    
+    NSDictionary *parameters = @{@"id": self.masterId};
+    
+    [[VENNetworkTool sharedManager] GET:@"index/master" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSDictionary *dataSourceDict = responseObject[@"data"];
+            self.dataSourceDict = dataSourceDict;
+            
+            [self setupTabbleView];
+            [self setupBottomToolBar];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VENWorkAndLuckDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cellHeight;
+    return 0;
 }
 
 - (void)setupTabbleView {
@@ -57,7 +72,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
     tableView.dataSource = self;
-    [tableView registerClass:[VENWorkAndLuckDetailTableViewCell class] forCellReuseIdentifier:cellIdentifier];
     tableView.showsVerticalScrollIndicator = NO;
     //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.separatorInset = UIEdgeInsetsZero;
@@ -88,7 +102,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // title
     UILabel *navTitleLabel = [[UILabel alloc] init];
-    navTitleLabel.text = @"事业财运";
+    navTitleLabel.text = self.navTitle;
     navTitleLabel.textColor = [UIColor whiteColor];
     navTitleLabel.font = [UIFont systemFontOfSize:17.0f];
     [navView addSubview:navTitleLabel];
@@ -98,9 +112,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
         make.centerX.mas_equalTo(navView.mas_centerX);
     }];
     
+    // model
+    VENHomePageModel *model = [VENHomePageModel yy_modelWithJSON:self.dataSourceDict];
+    
     // 头像
     UIImageView *iconImageView = [[UIImageView alloc] init];
-    iconImageView.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
+    [iconImageView sd_setImageWithURL:[NSURL URLWithString:model.avatarUrl] placeholderImage:nil];
+    self.imageURL = model.avatarUrl;
     iconImageView.layer.cornerRadius = 146 / 4;
     iconImageView.layer.masksToBounds = YES;
     iconImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -115,7 +133,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // 姓名
     UILabel *nameLabel = [[UILabel alloc] init];
-    nameLabel.text = @"大牛大师";
+    nameLabel.text = model.nickname;
+    self.name = model.nickname;
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.font = [UIFont systemFontOfSize:18.0f];
     [headerView addSubview:nameLabel];
@@ -146,13 +165,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
         make.width.mas_equalTo(1);
     }];
     
+    VENHomePageModel *model2 = [VENHomePageModel yy_modelWithJSON:self.dataSourceDict[@"levelInfo"]];
+    
     // bottomRightView
     UIView *bottomRightView = [[UIView alloc] initWithFrame:CGRectMake(kMainScreenWidth / 2, 0, kMainScreenWidth / 2, 8 + 18 + 10 + 14 + 28)];
     [bottomView addSubview:bottomRightView];
     
     // level
     UILabel *levelLabel = [[UILabel alloc] init];
-    levelLabel.text = @"v5级";
+    levelLabel.text = model2.name;
+    self.level = model2.name;
     levelLabel.textColor = [UIColor whiteColor];
     levelLabel.font = [UIFont systemFontOfSize:15.0f];
     [bottomLeftView addSubview:levelLabel];
@@ -177,7 +199,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // factions
     UILabel *factionsLabel = [[UILabel alloc] init];
-    factionsLabel.text = @"道家";
+    factionsLabel.text = model.study;
+    self.school = model.study;
     factionsLabel.textColor = [UIColor whiteColor];
     factionsLabel.font = [UIFont systemFontOfSize:15.0f];
     [bottomRightView addSubview:factionsLabel];
@@ -237,6 +260,31 @@ static NSString *cellIdentifier = @"cellIdentifier";
     UIView *splitLineView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 80 + 73 + 23 + 22 + 32 + 8 + 18 + 10 + 14 + 28 + 10 + 49, kMainScreenWidth, 1)];
     splitLineView3.backgroundColor = UIColorFromRGB(0xf5f5f5);
     [headerView addSubview:splitLineView3];
+    
+    // webView
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 80 + 73 + 23 + 22 + 32 + 8 + 18 + 10 + 14 + 28 + 10 + 49 + 1, kMainScreenWidth, kMainScreenHeight - 45 - (80 + 73 + 23 + 22 + 32 + 8 + 18 + 10 + 14 + 28 + 10 + 49 + 1))];
+    webView.delegate = self;
+    webView.scrollView.scrollEnabled = NO;
+    [webView loadHTMLString:model.content baseURL:nil];
+    [headerView addSubview:webView];
+
+    self.tableView = tableView;
+    self.iconImageView = iconImageView;
+    self.tableHeaderView = headerView;
+    self.webView = webView;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    CGFloat webViewHeight = [webView.scrollView contentSize].height;
+
+    NSLog(@"%f", webViewHeight);
+
+    CGRect newFrame = webView.frame;
+    newFrame.size.height = webViewHeight;
+    webView.frame = newFrame;
+
+    self.tableView.tableHeaderView.frame = CGRectMake(0, 0, kMainScreenWidth, 80 + 73 + 23 + 22 + 32 + 8 + 18 + 10 + 14 + 28 + 10 + 49 + 1 + webViewHeight);
+    self.tableView.tableHeaderView = self.tableHeaderView;
 }
 
 - (void)setupBottomToolBar {
@@ -248,11 +296,25 @@ static NSString *cellIdentifier = @"cellIdentifier";
     splitLineView.backgroundColor = UIColorFromRGB(0xe8e8e8);
     [bottomToolBarView addSubview:splitLineView];
     
+    // model
+    VENHomePageModel *model = [VENHomePageModel yy_modelWithJSON:self.dataSourceDict];
+    
+    // 关注
     UIButton *fucosButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 1, kMainScreenWidth / 3, 44)];
+    
+    if ([model.isSubscribe integerValue] == 1) {
+        fucosButton.selected = YES;
+    } else if ([model.isSubscribe integerValue] == 2) {
+        fucosButton.selected = NO;
+    }
+    
+    [fucosButton addTarget:self action:@selector(fucosButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomToolBarView addSubview:fucosButton];
     
+//    isSubscribe
+    
     UIImageView *iconImageView = [[UIImageView alloc] init];
-    iconImageView.image = [UIImage imageNamed:@"detail_focus_nor"];
+    iconImageView.image = [UIImage imageNamed:fucosButton.selected == YES ? @"detail_focus_on1" : @"detail_focus_nor"];
     [fucosButton addSubview:iconImageView];
     
     [iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -277,6 +339,30 @@ static NSString *cellIdentifier = @"cellIdentifier";
     purchaseButton.backgroundColor = COLOR_THEME;
     [purchaseButton addTarget:self action:@selector(purchaseButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [bottomToolBarView addSubview:purchaseButton];
+    
+    self.iconImageView = iconImageView;
+}
+
+- (void)fucosButtonClick:(UIButton *)button {
+    
+    button.selected = !button.selected;
+    
+    NSDictionary *parameters = @{@"masterId": self.masterId};
+    
+    [[VENNetworkTool sharedManager] POST:button.selected == NO ? @"index/userUnsubscribe" : @"index/userSubscribe" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            self.iconImageView.image = [UIImage imageNamed:button.selected == YES ? @"detail_focus_on1" : @"detail_focus_nor"];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)purchaseButtonClick {
@@ -300,13 +386,19 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (VENWorkAndLuckDetailPopupView *)popupView {
     if (_popupView == nil) {
         _popupView = [[VENWorkAndLuckDetailPopupView alloc] init];
+        _popupView.dataSourceArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:self.dataSourceDict[@"services"]];
         
+        __weak typeof(self) weakSelf = self;
+        _popupView.block = ^(VENHomePageModel *model) {
+            weakSelf.choiceModel = model;
+        };
+
         _popupView.transform = CGAffineTransformMakeTranslation(0.01, kMainScreenHeight);
         [UIView animateWithDuration:0.3 animations:^{
             
-            _popupView.transform = CGAffineTransformMakeTranslation(0.01, 0.01);
-            _popupView.backgroundColor = [UIColor whiteColor];
-            _popupView.frame = CGRectMake(0, kMainScreenHeight - 294, kMainScreenWidth, 294);
+            weakSelf.popupView.transform = CGAffineTransformMakeTranslation(0.01, 0.01);
+            weakSelf.popupView.backgroundColor = [UIColor whiteColor];
+            weakSelf.popupView.frame = CGRectMake(0, kMainScreenHeight - 294, kMainScreenWidth, 294);
         }];
 
         _popupView.backgroundColor = [UIColor whiteColor];
@@ -320,21 +412,30 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)popupViewPurchaseButtonClick {
     
-    [self tapClick];
-    
-    VENCheckoutSuccessViewController *vc = [[VENCheckoutSuccessViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.choiceModel) {
+        VENConfirmationOfOrderViewController *vc =[[VENConfirmationOfOrderViewController alloc] init];
+        vc.model = self.choiceModel;
+        vc.name = self.name;
+        vc.imageURL = self.imageURL;
+        vc.level = self.level;
+        vc.school = self.school;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        [self tapClick];
+    }
 }
 
 - (void)tapClick {
+    
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.3 animations:^{
         
         self.popupView.transform = CGAffineTransformMakeTranslation(0.01, kMainScreenHeight);
         [self.popupView removeFromSuperview];
         [self.backgroundView removeFromSuperview];
-        _backgroundView = nil;
-        _popupView = nil;
-
+        weakSelf.backgroundView = nil;
+        weakSelf.popupView = nil;
+        weakSelf.choiceModel = nil;
     }];
 }
 

@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "VENTabBarController.h"
+#import "VENLoginViewController.h"
+#import "VENHomePageViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,12 +17,13 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
     _window = [[UIWindow alloc] initWithFrame:kMainScreenFrameRect];
-    _window.rootViewController = [[VENTabBarController alloc] init];
+    
+    _window.rootViewController = [[VENUserTypeManager sharedManager] isLogin] ? [[VENTabBarController alloc] init] : [[VENLoginViewController alloc] init];
+    
     [_window makeKeyAndVisible];
     
     return YES;

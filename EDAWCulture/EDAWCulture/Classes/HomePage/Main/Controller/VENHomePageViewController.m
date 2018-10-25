@@ -11,10 +11,17 @@
 #import "VENHomePageHeaderViewButton.h"
 #import "VENHomePageTableViewCell.h"
 #import "VENWorkAndLuckViewController.h"
+#import "VENHomePageModel.h"
 
 @interface VENHomePageViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, VENHomePageHeaderViewScrollViewDelegate>
 @property (nonatomic, strong) VENHomePageHeaderViewScrollView *scrollView;
 @property (nonatomic, strong) VENHomePageHeaderViewScrollView *scrollView2;
+
+@property (nonatomic, copy) NSArray *bannersArr;
+@property (nonatomic, copy) NSString *notice;
+@property (nonatomic, copy) NSArray *infosArr;
+@property (nonatomic, copy) NSArray *recMastersArr;
+@property (nonatomic, copy) NSArray *serviceIconsArr;
 
 @end
 
@@ -27,15 +34,57 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupTabbleView];
+    [self loadHomePageData];
+}
+
+- (void)loadHomePageData {
+    
+    [[VENNetworkTool sharedManager] GET:@"index/homePage" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+//        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSArray *bannersArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"header"][@"banners"]];
+            
+            NSString *notice = responseObject[@"data"][@"header"][@"notice"];
+            
+            NSArray *infosArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"infos"]];
+            
+            NSArray *recMastersArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"recMasters"]];
+            
+            NSArray *serviceIconsArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"serviceIcons"]];
+            
+            self.bannersArr = bannersArr;
+            self.notice = notice;
+            self.infosArr = infosArr;
+            self.recMastersArr = recMastersArr;
+            self.serviceIconsArr = serviceIconsArr;
+            
+            [self setupTabbleView];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.infosArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VENHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    VENHomePageModel *model = self.infosArr[indexPath.row];
+    
+    cell.titleLabel.text = model.title;
+    cell.contentLabel.text = model.summary;
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@"1"]];
+    cell.dateLabel.text = model.created_time;
+    
     return cell;
 }
 
@@ -48,7 +97,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTabbleView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight + 20) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight - 49 + 20) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -64,15 +113,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.tableHeaderView = headerView;
     
     // 广告
-    NSArray *imagesURLStrings = @[@"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
-                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
-                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"];
+    NSMutableArray *bannersMuArr = [NSMutableArray array];
+    for (VENHomePageModel *model in self.bannersArr) {
+        [bannersMuArr addObject:model.picture];
+    }
+    
+    NSLog(@"bannersArr - %@", bannersMuArr);
     
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainScreenWidth, 375 / 2) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     cycleScrollView.currentPageDotColor = COLOR_THEME;
     cycleScrollView.pageDotColor = [UIColor whiteColor];
-    cycleScrollView.imageURLStringsGroup = imagesURLStrings;
+    cycleScrollView.imageURLStringsGroup = bannersMuArr;
     [headerView addSubview:cycleScrollView];
     
     // 公告
@@ -92,7 +144,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
     
     UILabel *proclamationLabel = [[UILabel alloc] init];
-    proclamationLabel.text = @"平台版本升级，敬请期待…";
+    proclamationLabel.text = self.notice;
     proclamationLabel.textColor = UIColorFromRGB(0x333);
     proclamationLabel.font = [UIFont systemFontOfSize:15.0f];
     [headerView addSubview:proclamationLabel];
@@ -110,10 +162,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // 图文
     NSMutableArray *views = [NSMutableArray array];
-    NSArray *titles = @[@"婚恋感情", @"事业财运", @"八字合婚", @"命运详批", @"塔罗占星", @"流年运势", @"宝宝起名", @"公司起名", @"婚恋感情", @"事业财运", @"八字合婚", @"命运详批", @"塔罗占星", @"流年运势", @"宝宝起名", @"公司起名"];
     
-    for (int i = 0; i < 16; i++) {
-        VENHomePageHeaderViewButton *btn = [[VENHomePageHeaderViewButton alloc] initWithFrame:CGRectZero setTitle:titles[i] setImageName:[@"class_0" stringByAppendingString:[NSString stringWithFormat:@"%d", i + 1]] setButtonImageWidth:40.0f setImageTitleSpace:13.0f setButtonTitleLabelFontSize:13.0f];
+    NSMutableArray *buttonsTitleMuArr = [NSMutableArray array];
+    NSMutableArray *buttonsImageMuArr = [NSMutableArray array];
+    for (VENHomePageModel *model in self.serviceIconsArr) {
+        [buttonsTitleMuArr addObject:model.name];
+        [buttonsImageMuArr addObject:model.picture];
+    }
+    
+    for (int i = 0; i < buttonsTitleMuArr.count; i++) {
+        VENHomePageHeaderViewButton *btn = [[VENHomePageHeaderViewButton alloc] initWithFrame:CGRectZero setTitle:buttonsTitleMuArr[i] setImageName:buttonsImageMuArr[i] setButtonImageWidth:40.0f setImageTitleSpace:13.0f setButtonTitleLabelFontSize:13.0f];
         [views addObject:btn];
     }
     
@@ -161,10 +219,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // 图文
     NSMutableArray *views2 = [NSMutableArray array];
-    NSArray *titles2 = @[@"大师1", @"大师2", @"大师3", @"大师4", @"大师5", @"大师6"];
     
-    for (int i = 0; i < 6; i++) {
-        VENHomePageHeaderViewButton *btn = [[VENHomePageHeaderViewButton alloc] initWithFrame:CGRectZero setTitle:titles2[i] setImageName:[@"class_0" stringByAppendingString:[NSString stringWithFormat:@"%d", i + 1]] setButtonImageWidth:80.0f setImageTitleSpace:15.0f setButtonTitleLabelFontSize:15.0f];
+    NSMutableArray *buttonsTitleMuArr2 = [NSMutableArray array];
+    NSMutableArray *buttonsImageMuArr2 = [NSMutableArray array];
+    for (VENHomePageModel *model in self.recMastersArr) {
+        [buttonsTitleMuArr2 addObject:model.nickname];
+        [buttonsImageMuArr2 addObject:model.avatarUrl];
+    }
+    
+    for (int i = 0; i < buttonsTitleMuArr2.count; i++) {
+        VENHomePageHeaderViewButton *btn = [[VENHomePageHeaderViewButton alloc] initWithFrame:CGRectZero setTitle:buttonsTitleMuArr2[i] setImageName:buttonsImageMuArr2[i] setButtonImageWidth:80.0f setImageTitleSpace:15.0f setButtonTitleLabelFontSize:15.0f];
         [views2 addObject:btn];
     }
     
@@ -228,14 +292,24 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [footerView addSubview:moreButton];
 }
 
-#pragma DTHomeScrollViewDelegate
-- (void)buttonUpInsideWithView:(UIButton *)btn withIndex:(NSInteger)index withView:(VENHomePageHeaderViewScrollView *)view{
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     
-    if (index == 1) {
-        VENWorkAndLuckViewController *vc = [[VENWorkAndLuckViewController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    NSLog(@"---点击了第%ld张图片", index);
+}
+
+#pragma DTHomeScrollViewDelegate
+- (void)buttonUpInsideWithView:(UIButton *)btn withIndex:(NSInteger)index withView:(VENHomePageHeaderViewScrollView *)view {
+    
+    VENHomePageModel *model = self.serviceIconsArr[index];
+    
+    VENWorkAndLuckViewController *vc = [[VENWorkAndLuckViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.pageID = model.bannersID;
+    vc.navigationItem.title = model.name;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    NSLog(@"%@", model);
+    NSLog(@"%@", model.bannersID);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

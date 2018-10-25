@@ -10,8 +10,11 @@
 #import "VENHomePageTableViewCell.h"
 #import "VENCulturalCircleDetailViewController.h"
 #import "VENCulturalCircleApprenticeViewController.h"
+#import "VENHomePageModel.h"
 
 @interface VENCulturalCircleViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, copy) NSString *banner;
+@property (nonatomic, copy) NSArray *infosArr;
 
 @end
 
@@ -24,15 +27,47 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupTabbleView];
+    [self loadCulturalCirclePageData];
+}
+
+- (void)loadCulturalCirclePageData {
+    
+    [[VENNetworkTool sharedManager] GET:@"index/studyPage" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSString *banner = responseObject[@"data"][@"banner"];
+            
+            NSArray *infosArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"infos"]];
+            
+            self.banner = banner;
+            self.infosArr = infosArr;
+            
+            [self setupTabbleView];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.infosArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VENHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    VENHomePageModel *model = self.infosArr[indexPath.row];
+    cell.titleLabel.text = model.title;
+    cell.contentLabel.text = model.summary;
+    cell.dateLabel.text = model.created_time;
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.thumbnail] placeholderImage:[UIImage imageNamed:@""]];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -48,7 +83,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTabbleView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight + 20) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight + 20 - 49) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -64,7 +99,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.tableHeaderView = headerView;
     
     // 广告
-    NSArray *imagesURLStrings = @[@"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg"];
+    NSArray *imagesURLStrings = @[self.banner];
     
     SDCycleScrollView *cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainScreenWidth, 375 / 2) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView.showPageControl = NO;

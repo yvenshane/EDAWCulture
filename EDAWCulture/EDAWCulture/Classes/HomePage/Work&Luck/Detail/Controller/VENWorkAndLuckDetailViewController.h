@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface VENWorkAndLuckDetailViewController : UIViewController
+@property (nonatomic, copy) NSString *navTitle;
+@property (nonatomic, copy) NSString *masterId;
 
 @end

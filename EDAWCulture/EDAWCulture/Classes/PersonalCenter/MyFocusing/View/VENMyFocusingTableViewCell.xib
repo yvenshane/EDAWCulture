@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment version="2304" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,36 +33,47 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="介绍介绍介绍介绍介绍介绍介绍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDO-Y1-MlB">
-                        <rect key="frame" x="110" y="54" width="195" height="15"/>
+                        <rect key="frame" x="110" y="70" width="195" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金额金额金额" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0z-mJ-ZfZ">
-                        <rect key="frame" x="110" y="94" width="195" height="18"/>
+                        <rect key="frame" x="110" y="93" width="195" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="1" green="0.62352941176470589" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="detail_focus_on1" translatesAutoresizingMaskIntoConstraints="NO" id="Lf2-dm-uAs">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="介绍介绍介绍介绍介绍介绍介绍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyu-sQ-fcU">
+                        <rect key="frame" x="110" y="47" width="195" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pu9-hi-GJq">
                         <rect key="frame" x="281" y="17" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="24" id="77e-2c-6HI"/>
-                            <constraint firstAttribute="height" constant="24" id="lqD-gT-Jgc"/>
+                            <constraint firstAttribute="height" constant="24" id="c0E-A0-HWJ"/>
+                            <constraint firstAttribute="width" constant="24" id="caO-FR-bKh"/>
                         </constraints>
-                    </imageView>
+                        <state key="normal" image="detail_focus_on"/>
+                        <state key="selected" image="detail_focus_on1"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="h0z-mJ-ZfZ" firstAttribute="top" secondItem="KDO-Y1-MlB" secondAttribute="bottom" constant="25" id="37G-aP-7vp"/>
                     <constraint firstAttribute="trailing" secondItem="KDO-Y1-MlB" secondAttribute="trailing" constant="15" id="3SM-oQ-AOf"/>
-                    <constraint firstItem="KDO-Y1-MlB" firstAttribute="top" secondItem="NUf-tB-pOM" secondAttribute="bottom" constant="15" id="6K8-PT-UVq"/>
+                    <constraint firstAttribute="trailing" secondItem="yyu-sQ-fcU" secondAttribute="trailing" constant="15" id="7JZ-Pu-pke"/>
                     <constraint firstItem="KDO-Y1-MlB" firstAttribute="leading" secondItem="ci8-3k-FQQ" secondAttribute="trailing" constant="15" id="8pj-Sh-FiS"/>
+                    <constraint firstItem="yyu-sQ-fcU" firstAttribute="top" secondItem="NUf-tB-pOM" secondAttribute="bottom" constant="8" id="9QC-rl-M1A"/>
                     <constraint firstItem="ci8-3k-FQQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="Cq9-4o-KTC"/>
                     <constraint firstItem="NUf-tB-pOM" firstAttribute="leading" secondItem="ci8-3k-FQQ" secondAttribute="trailing" constant="15" id="IEz-NS-LcA"/>
-                    <constraint firstItem="Lf2-dm-uAs" firstAttribute="top" secondItem="NUf-tB-pOM" secondAttribute="top" id="JBg-rz-UKd"/>
                     <constraint firstItem="ci8-3k-FQQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="K0f-Iv-1yW"/>
                     <constraint firstItem="NUf-tB-pOM" firstAttribute="top" secondItem="ci8-3k-FQQ" secondAttribute="top" constant="-8" id="SIt-H7-YrD"/>
-                    <constraint firstAttribute="trailing" secondItem="Lf2-dm-uAs" secondAttribute="trailing" constant="15" id="p2E-pN-fBy"/>
+                    <constraint firstItem="KDO-Y1-MlB" firstAttribute="top" secondItem="yyu-sQ-fcU" secondAttribute="bottom" constant="8" id="cVS-ch-a9F"/>
+                    <constraint firstItem="pu9-hi-GJq" firstAttribute="top" secondItem="NUf-tB-pOM" secondAttribute="top" id="caN-0M-3Fi"/>
+                    <constraint firstItem="h0z-mJ-ZfZ" firstAttribute="top" secondItem="KDO-Y1-MlB" secondAttribute="bottom" constant="8" id="n7v-NJ-SmE"/>
+                    <constraint firstItem="yyu-sQ-fcU" firstAttribute="leading" secondItem="ci8-3k-FQQ" secondAttribute="trailing" constant="15" id="qA2-0Q-9Lz"/>
+                    <constraint firstAttribute="trailing" secondItem="pu9-hi-GJq" secondAttribute="trailing" constant="15" id="r4A-8D-Raq"/>
                     <constraint firstItem="h0z-mJ-ZfZ" firstAttribute="leading" secondItem="ci8-3k-FQQ" secondAttribute="trailing" constant="15" id="rXf-0c-VJG"/>
                     <constraint firstAttribute="trailing" secondItem="h0z-mJ-ZfZ" secondAttribute="trailing" constant="15" id="wru-Tq-6lc"/>
                     <constraint firstAttribute="trailing" secondItem="NUf-tB-pOM" secondAttribute="trailing" constant="54" id="xo5-cg-nWk"/>
@@ -74,11 +85,13 @@
                 <outlet property="nameLabel" destination="NUf-tB-pOM" id="XoB-nS-D8K"/>
                 <outlet property="priceLabel" destination="h0z-mJ-ZfZ" id="Q0R-dy-c0c"/>
                 <outlet property="profilesLabel" destination="KDO-Y1-MlB" id="8dH-qd-jRi"/>
+                <outlet property="skillsLabel" destination="yyu-sQ-fcU" id="Flz-nZ-bQ8"/>
             </connections>
             <point key="canvasLocation" x="34" y="99.5"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="detail_focus_on" width="24" height="24"/>
         <image name="detail_focus_on1" width="24" height="24"/>
     </resources>
 </document>

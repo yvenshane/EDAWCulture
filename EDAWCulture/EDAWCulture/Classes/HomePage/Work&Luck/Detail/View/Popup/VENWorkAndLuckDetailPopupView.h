@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class VENHomePageModel;
+
+typedef void (^choiceModelBlock)(VENHomePageModel *);
 
 @interface VENWorkAndLuckDetailPopupView : UIView
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *purchaseButton;
 @property (nonatomic, assign) NSInteger indexPath;
+
+@property (nonatomic, copy) NSArray *dataSourceArr;
+@property (nonatomic, copy) choiceModelBlock block;
 
 @end

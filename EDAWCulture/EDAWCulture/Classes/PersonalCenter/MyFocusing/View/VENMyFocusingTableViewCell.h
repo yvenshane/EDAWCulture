@@ -11,7 +11,10 @@
 @interface VENMyFocusingTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *profilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
+
 
 @end

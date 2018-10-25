@@ -9,9 +9,11 @@
 #import "VENWorkAndLuckViewController.h"
 #import "VENMyFocusingTableViewCell.h"
 #import "VENWorkAndLuckDetailViewController.h"
+#import "VENHomePageModel.h"
 
 @interface VENWorkAndLuckViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray *headerViewTitleLabelTextMuArr;
+@property (nonatomic, copy) NSDictionary *dataSourceDict;
+@property (nonatomic, copy) NSArray *resultArr;
 
 @end
 
@@ -22,37 +24,88 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = @"事业财运";
+//    self.navigationItem.title = @"事业财运";
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
 
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupTabbleView];
+    [self loadData];
     [self setupLeftBtn];
 }
 
+- (void)loadData {
+    
+    NSDictionary *parameters = @{@"serviceIconId": self.pageID};
+    
+    [[VENNetworkTool sharedManager] GET:@"index/levelGroupMasters" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSDictionary *dataSourceDict = responseObject[@"data"];
+            
+            NSArray *resultArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:dataSourceDict[@"result"]];
+
+            self.resultArr = resultArr;
+            self.dataSourceDict = dataSourceDict;
+            
+            [self setupTabbleView];
+            
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 5;
+    return self.resultArr.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    
+    NSArray *mastersArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:self.dataSourceDict[@"result"][section][@"masters"]];
+
+    return mastersArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSArray *mastersArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:self.dataSourceDict[@"result"][indexPath.section][@"masters"]];
+    
+    VENHomePageModel *model = mastersArr[indexPath.row];
+
     VENMyFocusingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.avatarUrl] placeholderImage:nil];
+    cell.nameLabel.text = model.nickname;
+    cell.skillsLabel.text = [model.goodFields componentsJoinedByString:@"  "];
+    cell.profilesLabel.text = model.summary;
+    cell.priceLabel.text = model.price_text;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSArray *mastersArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:self.dataSourceDict[@"result"][indexPath.section][@"masters"]];
+    
+    VENHomePageModel *model = mastersArr[indexPath.row];
+    
     VENWorkAndLuckDetailViewController *vc = [[VENWorkAndLuckDetailViewController alloc] init];
+    vc.navTitle = self.navigationItem.title;
+    vc.masterId = model.bannersID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
+    VENHomePageModel *model = self.resultArr[section];
+    
     // 整个 HeaderView
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 59)];
     headerView.backgroundColor = [UIColor whiteColor];
@@ -75,7 +128,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
 
     UILabel *titleViewLabel = [[UILabel alloc] init];
-    titleViewLabel.text = self.headerViewTitleLabelTextMuArr[section];
+    titleViewLabel.text = model.name;
     titleViewLabel.textColor = UIColorFromRGB(0x333);
     titleViewLabel.font = [UIFont systemFontOfSize:17.0f];
     [headerView addSubview:titleViewLabel];
@@ -128,13 +181,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)setupLeftBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (NSMutableArray *)headerViewTitleLabelTextMuArr {
-    if (_headerViewTitleLabelTextMuArr == nil) {
-        _headerViewTitleLabelTextMuArr = [NSMutableArray arrayWithArray:@[@"大师级", @"专家级", @"执业师", @"研究员", @"爱好者"]];
-    }
-    return _headerViewTitleLabelTextMuArr;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

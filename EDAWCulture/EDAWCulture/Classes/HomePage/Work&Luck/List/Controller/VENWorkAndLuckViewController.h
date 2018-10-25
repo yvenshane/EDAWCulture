@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface VENWorkAndLuckViewController : UIViewController
+@property (nonatomic, copy) NSString *pageID;
 
 @end

@@ -41,9 +41,10 @@
     [self addSubview:self.buttonTitleLabel];
     
     self.buttonImage = [[UIImageView alloc] initWithFrame:CGRectZero];
-    self.buttonImage.image = [UIImage imageNamed:self.imageName];
+//    self.buttonImage.image = [UIImage imageNamed:self.imageName];
     
-    //[self.btnImage sd_setImageWithURL:[NSURL URLWithString:self.imageURLString] placeholderImage:[UIImage imageNamed:@"暂无图片"]];
+    [self.buttonImage sd_setImageWithURL:[NSURL URLWithString:self.imageName] placeholderImage:[UIImage imageNamed:@""]];
+    
     [self addSubview:self.buttonImage];
 }
 

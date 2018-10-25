@@ -7,6 +7,7 @@
 //
 
 #import "VENWorkAndLuckDetailPopupView.h"
+#import "VENHomePageModel.h"
 
 @interface VENWorkAndLuckDetailPopupView () <UITableViewDelegate, UITableViewDataSource>
 
@@ -22,6 +23,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         tableView.dataSource = self;
         tableView.rowHeight = 49.0f;
         tableView.separatorInset = UIEdgeInsetsZero;
+        tableView.tableFooterView = [UIView new];
         [self addSubview:tableView];
         
         UIButton *purchaseButton = [[UIButton alloc] init];
@@ -49,14 +51,17 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataSourceArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = @"婚姻感情";
-    cell.detailTextLabel.text = @"¥300.00";
+    
+    VENHomePageModel *model = self.dataSourceArr[indexPath.row];
+    
+    cell.textLabel.text = model.name;
+    cell.detailTextLabel.text = model.price;
     
     cell.textLabel.textColor = indexPath.row == self.indexPath ? COLOR_THEME : UIColorFromRGB(0x333333);
     cell.detailTextLabel.textColor = indexPath.row == self.indexPath ? COLOR_THEME : UIColorFromRGB(0x333333);
@@ -72,6 +77,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     cell.textLabel.textColor = COLOR_THEME;
     cell.detailTextLabel.textColor = COLOR_THEME;
+    
+    self.block(self.dataSourceArr[indexPath.row]);
     
     [tableView reloadData];
 }

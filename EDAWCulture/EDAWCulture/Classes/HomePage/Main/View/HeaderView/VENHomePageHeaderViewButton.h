@@ -17,7 +17,7 @@
 @property (nonatomic, assign) CGFloat buttonImageWidth;
 
 @property (nonatomic, copy) NSString *imageName;
-@property (nonatomic, copy) NSString *imageURLString;
+//@property (nonatomic, copy) NSString *imageURLString;
 @property (nonatomic, assign) CGFloat imageTitleSpace;
 
 @property (nonatomic, copy) NSString *titleString;

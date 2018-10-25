@@ -21,7 +21,7 @@
 }
 
 - (BOOL)isMaster {
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"USER_TYPE"] isEqualToString:@"1"] ? YES : NO;
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"USER_TYPE"] isEqualToString:@"2"] ? YES : NO;
 }
 
 - (BOOL)isLogin {
