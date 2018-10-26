@@ -9,6 +9,9 @@
 #import "VENConfirmationOfOrderViewController.h"
 #import "VENConfirmationOfOrderTableViewCell.h"
 #import "VENHomePageModel.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "WXApiObject.h"
+#import "WXApi.h"
 
 @interface VENConfirmationOfOrderViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIButton *leftButton;
@@ -73,6 +76,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self.leftButton setTitleColor:button == self.rightButton ? [UIColor blackColor] : [UIColor whiteColor] forState:UIControlStateNormal];
     
     self.payType = !self.payType;
+    
+    NSLog(@"%d", self.payType);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,11 +162,42 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)payButtonClick {
-    if (self.payType) {
-        NSLog(@"支付宝%d", self.payType);
-    } else {
-        NSLog(@"微信%d", self.payType);
-    }
+    
+    NSDictionary *parameters = @{@"serviceId": self.model.bannersID,
+                                 @"pay_channel": self.payType ? @"alipay_app" : @"wxpay_app"};
+    
+    [[VENNetworkTool sharedManager] POST:@"index/serviceOrder" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            if (self.payType) {
+                [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"alipay" callback:^(NSDictionary *resultDic) {
+                    
+                    NSLog(@"reslut = %@",resultDic);
+                    
+                    if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) { // 支付成功
+                        
+                    }
+                }];
+            } else {
+                PayReq *req = [[PayReq alloc] init];
+                req.partnerId = [responseObject[@"data"][@"orderString"] objectForKey:@"partnerid"];
+                req.prepayId = [responseObject[@"data"][@"orderString"] objectForKey:@"prepayid"];
+                req.nonceStr = [responseObject[@"data"][@"orderString"] objectForKey:@"noncestr"];
+                req.timeStamp = [[responseObject[@"data"][@"orderString"] objectForKey:@"timeStamp"] intValue];
+                req.package = [responseObject[@"data"][@"orderString"] objectForKey:@"package"];
+                req.sign = [responseObject[@"data"][@"orderString"] objectForKey:@"sign"];
+                [WXApi sendReq:req];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)setupLeftBtnClick {

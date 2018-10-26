@@ -10,8 +10,9 @@
 #import "VENTabBarController.h"
 #import "VENLoginViewController.h"
 #import "VENHomePageViewController.h"
+#import "WXApi.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <WXApiDelegate>
 
 @end
 
@@ -21,14 +22,21 @@
     // Override point for customization after application launch.
     
     _window = [[UIWindow alloc] initWithFrame:kMainScreenFrameRect];
-    
     _window.rootViewController = [[VENUserTypeManager sharedManager] isLogin] ? [[VENTabBarController alloc] init] : [[VENLoginViewController alloc] init];
-    
     [_window makeKeyAndVisible];
+    
+    [WXApi registerApp:@"wxb257d5e83e6649de"];
     
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [WXApi handleOpenURL:url delegate:self];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
