@@ -23,7 +23,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>alipay</string>
+				<string>EDAWCulture</string>
 			</array>
 		</dict>
 		<dict>

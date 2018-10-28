@@ -44,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *city_name;
 @property (nonatomic, copy) NSString *province_name;
+@property (nonatomic, copy) NSString *kefu;
 
 @end
 

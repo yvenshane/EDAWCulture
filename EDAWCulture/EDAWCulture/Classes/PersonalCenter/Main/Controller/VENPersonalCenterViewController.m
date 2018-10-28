@@ -105,7 +105,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([VENUserTypeManager sharedManager].isMaster) {
+    if ([VENUserTypeManager sharedManager].isMaster) { // 大师
         if (indexPath.row == 0) {
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
@@ -117,19 +117,23 @@ static NSString *cellIdentifier = @"cellIdentifier";
             self.hiddenNav = NO;
             [self.navigationController pushViewController:vc animated:YES];
         }
-    } else {
+    } else { // 用户
         if (indexPath.row == 0) {
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == 4) { // 我的关注
             VENMyFocusingViewController *vc = [[VENMyFocusingViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 5) { // 联系客服
+            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@", self.model.kefu];
+            UIWebView * callWebview = [[UIWebView alloc] init];
+            [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+            [self.view addSubview:callWebview];
         }
-        
     }
 }
 

@@ -24,7 +24,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.navigationItem.title = @"下单成功";
     
     [self setupTableView];
-    [self setupLeftBtn];
+    [self setupBackButton];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -39,9 +39,17 @@ static NSString *cellIdentifier = @"cellIdentifier";
     cell.textLabel.textColor = UIColorFromRGB(0x666666);
     cell.textLabel.font = [UIFont systemFontOfSize:13.0f];
     
-    cell.detailTextLabel.text = self.dataSourceMuArr[1][@"detail"][indexPath.row];
     cell.detailTextLabel.textColor = UIColorFromRGB(0x333333);
     cell.detailTextLabel.font = [UIFont systemFontOfSize:13.0f];
+    
+    if (indexPath.row == 0) {
+        cell.detailTextLabel.text = self.orderDict[@"service_name"];
+    } else if (indexPath.row == 1) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", self.orderDict[@"amount"]];
+    } else {
+        cell.detailTextLabel.text = self.orderDict[@"created_time"];
+    }
+    
     return cell;
 }
 
@@ -118,6 +126,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     leftButton.backgroundColor = COLOR_THEME;
     [leftButton setTitle:@"继续下单" forState:UIControlStateNormal];
     [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(leftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     leftButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     leftButton.layer.cornerRadius = 4;
     leftButton.layer.masksToBounds = YES;
@@ -135,6 +144,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     rightButton.backgroundColor = UIColorFromRGB(0xffb136);
     [rightButton setTitle:@"立即咨询" forState:UIControlStateNormal];
     [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:16.0f];
     rightButton.layer.cornerRadius = 4;
     rightButton.layer.masksToBounds = YES;
@@ -148,21 +158,31 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
 }
 
-- (void)backButtonClick {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)leftButtonClick:(id)sender { // 继续下单
+    int index = (int)[[self.navigationController viewControllers]indexOfObject:self];
+    
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(index -2)] animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CONTINUE_THE_ORDER" object:nil];
 }
 
-- (void)setupLeftBtn {
+- (void)rightButtonClick:(id)sender { // 立即咨询
+    
+}
+
+- (void)setupBackButton {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     button.contentEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0);
     [button setImage:[UIImage imageNamed:@"top_back01"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(setupLeftBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(backButtonClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = barButton;
 }
 
-- (void)setupLeftBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+- (void)backButtonClick {
+    int index = (int)[[self.navigationController viewControllers]indexOfObject:self];
+    
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(index -2)] animated:YES];
 }
 
 - (CGFloat)label:(UILabel *)label setHeightToWidth:(CGFloat)width {
@@ -172,8 +192,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (NSMutableArray *)dataSourceMuArr {
     if (_dataSourceMuArr == nil) {
-        _dataSourceMuArr = [[NSMutableArray alloc] initWithArray:@[@{@"title" : @[@"项目", @"金额", @"下单时间"]},
-                                                                   @{@"detail" : @[@"项目名称", @"金额$500", @"下单时间2018-08-08"]}]];
+        _dataSourceMuArr = [[NSMutableArray alloc] initWithArray:@[@{@"title" : @[@"项目", @"金额", @"下单时间"]}]];
     }
     return _dataSourceMuArr;
 }

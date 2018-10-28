@@ -12,7 +12,7 @@
 #import "VENHomePageModel.h"
 #import "VENConfirmationOfOrderViewController.h"
 
-@interface VENWorkAndLuckDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
+@interface VENWorkAndLuckDetailViewController () <UITableViewDelegate, UIWebViewDelegate>
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) VENWorkAndLuckDetailPopupView *popupView;
 @property (nonatomic, copy) NSDictionary *dataSourceDict;
@@ -37,6 +37,12 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(continueTheOrder) name:@"CONTINUE_THE_ORDER" object:nil];
+}
+
+- (void)continueTheOrder {
+    [self purchaseButtonClick]; // 购买服务
 }
 
 - (void)loadData {
@@ -71,7 +77,7 @@
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight - 24) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
-    tableView.dataSource = self;
+//    tableView.dataSource = self;
     tableView.showsVerticalScrollIndicator = NO;
     //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.separatorInset = UIEdgeInsetsZero;
@@ -343,7 +349,7 @@
     self.iconImageView = iconImageView;
 }
 
-- (void)fucosButtonClick:(UIButton *)button {
+- (void)fucosButtonClick:(UIButton *)button { // 关注
     
     button.selected = !button.selected;
     
@@ -365,7 +371,7 @@
     }];
 }
 
-- (void)purchaseButtonClick {
+- (void)purchaseButtonClick { // 购买服务
     [self backgroundView];
     [self popupView];
 }
@@ -413,7 +419,7 @@
 - (void)popupViewPurchaseButtonClick {
     
     if (self.choiceModel) {
-        VENConfirmationOfOrderViewController *vc =[[VENConfirmationOfOrderViewController alloc] init];
+        VENConfirmationOfOrderViewController *vc = [[VENConfirmationOfOrderViewController alloc] init];
         vc.model = self.choiceModel;
         vc.name = self.name;
         vc.imageURL = self.imageURL;
@@ -453,6 +459,10 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [super viewWillDisappear:animated];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

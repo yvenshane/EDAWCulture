@@ -12,12 +12,14 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApiObject.h"
 #import "WXApi.h"
+#import "VENCheckoutSuccessViewController.h"
 
 @interface VENConfirmationOfOrderViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UIButton *leftButton;
 @property (nonatomic, strong) UIButton *rightButton;
 
 @property (nonatomic, assign) BOOL payType;
+@property (nonatomic, copy) NSDictionary *oderDict;
 
 @end
 
@@ -34,6 +36,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self setupTableView];
     [self setupBottomBar];
     [self setupLeftBtn];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alipayCallbackMethod:) name:@"ALIPAY_RESULTDIC" object:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -170,19 +174,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
         NSLog(@"%@", responseObject);
         
-        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+//        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
         
         if ([responseObject[@"code"] integerValue] == 1) {
             
+            self.oderDict = responseObject[@"data"][@"order"];
+            
             if (self.payType) {
                 
-                [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"alipay" callback:^(NSDictionary *resultDic) {
-                    
+                // 此回调只会在 H5 版支付宝时 调用, 支付宝客户端支付回调 走 AppDelegate
+                [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"EDAWCulture" callback:^(NSDictionary *resultDic) {
+
                     NSLog(@"reslut = %@",resultDic);
                     
-                    if ([resultDic[@"resultStatus"] isEqualToString:@"9000"]) { // 支付成功
-                        
-                    }
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ALIPAY_RESULTDIC" object:resultDic];
                 }];
             } else {
                 PayReq *req = [[PayReq alloc] init];
@@ -201,6 +206,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
 }
 
+- (void)alipayCallbackMethod:(NSNotification *)noti {
+    NSLog(@"noti.object - %@", noti.object);
+    
+    if ([noti.object[@"resultStatus"] integerValue] == 9000) { // 支付成功
+        VENCheckoutSuccessViewController *vc = [[VENCheckoutSuccessViewController alloc] init];
+        vc.orderDict = self.oderDict;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+}
+
 - (void)setupLeftBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -212,6 +227,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [button addTarget:self action:@selector(setupLeftBtnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = barButton;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
