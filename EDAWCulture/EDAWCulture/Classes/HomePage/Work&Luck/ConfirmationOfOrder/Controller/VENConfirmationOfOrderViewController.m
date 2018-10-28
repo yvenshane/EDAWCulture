@@ -85,7 +85,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44 - statusNavHeight) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorMake(245, 248, 247);
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -136,7 +136,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupBottomBar {
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - statusNavHeight - 44, kMainScreenWidth, 44)];
+    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - 44, kMainScreenWidth, 44)];
     bottomBar.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomBar];
     
@@ -175,6 +175,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         if ([responseObject[@"code"] integerValue] == 1) {
             
             if (self.payType) {
+                
                 [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"alipay" callback:^(NSDictionary *resultDic) {
                     
                     NSLog(@"reslut = %@",resultDic);

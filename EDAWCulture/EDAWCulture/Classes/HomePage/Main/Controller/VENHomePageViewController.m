@@ -12,6 +12,9 @@
 #import "VENHomePageTableViewCell.h"
 #import "VENWorkAndLuckViewController.h"
 #import "VENHomePageModel.h"
+#import "VENWorkAndLuckDetailViewController.h"
+#import "VENWebViewController.h"
+#import "VENCulturalCircleDetailViewController.h"
 
 @interface VENHomePageViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, VENHomePageHeaderViewScrollViewDelegate>
 @property (nonatomic, strong) VENHomePageHeaderViewScrollView *scrollView;
@@ -78,6 +81,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VENHomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     VENHomePageModel *model = self.infosArr[indexPath.row];
     
     cell.titleLabel.text = model.title;
@@ -89,7 +94,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    VENHomePageModel *model = self.infosArr[indexPath.row];
     
+    VENCulturalCircleDetailViewController *vc = [[VENCulturalCircleDetailViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.infoID = model.bannersID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,7 +107,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTabbleView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight - 49 + 20) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 49) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -283,6 +293,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [moreButton setTitle:@"查看更多" forState:UIControlStateNormal];
     [moreButton setTitleColor:UIColorFromRGB(0x999999) forState:UIControlStateNormal];
     moreButton.titleLabel.font = [UIFont systemFontOfSize:13.0f];
+    [moreButton addTarget:self action:@selector(moreButtonClick) forControlEvents:UIControlEventTouchUpInside];
     
     moreButton.layer.cornerRadius = 4;
     moreButton.layer.masksToBounds = YES;
@@ -292,29 +303,53 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [footerView addSubview:moreButton];
 }
 
+- (void)moreButtonClick {
+    self.tabBarController.selectedIndex = 2;
+}
+
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {
     
-    NSLog(@"---点击了第%ld张图片", index);
+    VENHomePageModel *model = self.bannersArr[index];
+    
+    
+    VENWebViewController *vc = [[VENWebViewController alloc] init];
+    vc.navTitle = model.title;
+    vc.urlStr = model.url;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma DTHomeScrollViewDelegate
 - (void)buttonUpInsideWithView:(UIButton *)btn withIndex:(NSInteger)index withView:(VENHomePageHeaderViewScrollView *)view {
     
-    VENHomePageModel *model = self.serviceIconsArr[index];
-    
-    VENWorkAndLuckViewController *vc = [[VENWorkAndLuckViewController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    vc.pageID = model.bannersID;
-    vc.navigationItem.title = model.name;
-    [self.navigationController pushViewController:vc animated:YES];
-    
-    NSLog(@"%@", model);
-    NSLog(@"%@", model.bannersID);
+    if (view == self.scrollView) {
+        
+        VENHomePageModel *model = self.serviceIconsArr[index];
+        
+        VENWorkAndLuckViewController *vc = [[VENWorkAndLuckViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.pageID = model.bannersID;
+        vc.navigationItem.title = model.name;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+        NSLog(@"%@", model);
+        NSLog(@"%@", model.bannersID);
+        
+    } else if (view == self.scrollView2) {
+        
+        VENHomePageModel *model = self.recMastersArr[index];
+        
+        VENWorkAndLuckDetailViewController *vc = [[VENWorkAndLuckDetailViewController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.masterId = model.bannersID;
+        vc.navTitle = @"推荐大师";
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
+
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }

@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *price;
 
+@property (nonatomic, copy) NSString *city_name;
+@property (nonatomic, copy) NSString *province_name;
+
 @end
 
 NS_ASSUME_NONNULL_END

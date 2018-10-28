@@ -8,10 +8,16 @@
 
 #import "VENCulturalCircleDetailViewController.h"
 #import "VENCulturalCircleApprenticeTableViewCell.h"
+#import "VENHomePageModel.h"
 
-@interface VENCulturalCircleDetailViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, assign) CGFloat cellHeight;
+@interface VENCulturalCircleDetailViewController () <UITableViewDelegate, UIWebViewDelegate>
 
+@property (nonatomic, copy) NSDictionary *resultDict;
+
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIWebView *webView;
 @end
 
 static NSString *cellIdentifier = @"cellIdentifier";
@@ -23,39 +29,39 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.title = @"我要拜师";
+    self.navigationItem.title = @"详情";
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    // 计算 cell 高度
-    VENCulturalCircleApprenticeTableViewCell *cell = [[VENCulturalCircleApprenticeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell layoutSubviews];
-    self.cellHeight = cell.maxHeight;
-    
     [self setupLeftBtn];
-    [self setupTableView];
+    [self loadData];
+}
+
+- (void)loadData {
+    [[VENNetworkTool sharedManager] GET:@"index/infoDetail" parameters:@{@"id": self.infoID} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSDictionary *resultDict = responseObject[@"data"][@"result"];
+            self.resultDict = resultDict;
+            
+            [self setupTableView];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VENCulturalCircleApprenticeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cellHeight;
-}
-
 - (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight) style:UITableViewStylePlain];
     tableView.delegate = self;
-    tableView.dataSource = self;
-    [tableView registerClass:[VENCulturalCircleApprenticeTableViewCell class] forCellReuseIdentifier:cellIdentifier];
     tableView.showsVerticalScrollIndicator = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
@@ -64,23 +70,25 @@ static NSString *cellIdentifier = @"cellIdentifier";
     headerView.backgroundColor = [UIColor whiteColor];
     tableView.tableHeaderView = headerView;
     
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题";
-    titleLabel.textColor = UIColorFromRGB(0x333333);
-    titleLabel.font = [UIFont systemFontOfSize:21.0f];
-    titleLabel.numberOfLines = 0;
-    [headerView addSubview:titleLabel];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight)];
+    webView.delegate = self;
+    webView.scrollView.scrollEnabled = NO;
+    [webView loadHTMLString:self.resultDict[@"content"] baseURL:nil];
+    [headerView addSubview:webView];
     
-    CGFloat height = [self label:titleLabel setHeightToWidth:kMainScreenWidth - 30];
-    titleLabel.frame = CGRectMake(15, 156 / 2 - statusNavHeight, kMainScreenWidth - 30, height);
+    self.tableView = tableView;
+    self.headerView = headerView;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    CGFloat webViewHeight = [webView.scrollView contentSize].height;
     
-    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, height + 20, kMainScreenWidth - 30, 18)];
-    dateLabel.text = @"时间时间时间时间时间时间时间时间";
-    dateLabel.textColor = UIColorFromRGB(0x666666);
-    dateLabel.font = [UIFont systemFontOfSize:15.0f];
-    [headerView addSubview:dateLabel];
+    CGRect newFrame = webView.frame;
+    newFrame.size.height = webViewHeight;
+    webView.frame = newFrame;
     
-    headerView.frame = CGRectMake(0, 0, kMainScreenWidth, height + 20 + 18 + 20);
+    self.tableView.tableHeaderView.frame = CGRectMake(0, 0, kMainScreenWidth, webViewHeight);
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)setupLeftBtn {
@@ -101,11 +109,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-}
-
-- (CGFloat)label:(UILabel *)label setHeightToWidth:(CGFloat)width {
-    CGSize size = [label sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
-    return size.height;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *skillsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *profilesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 
 
 

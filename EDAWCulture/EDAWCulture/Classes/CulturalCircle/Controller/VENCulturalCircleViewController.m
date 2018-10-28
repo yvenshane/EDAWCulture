@@ -73,8 +73,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    VENHomePageModel *model = self.infosArr[indexPath.row];
+    
     VENCulturalCircleDetailViewController *vc = [[VENCulturalCircleDetailViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.infoID = model.bannersID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -83,7 +87,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTabbleView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight + 20 - 49) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight  - 49) style:UITableViewStylePlain];
     
     tableView.delegate = self;
     tableView.dataSource = self;

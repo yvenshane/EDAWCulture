@@ -34,6 +34,9 @@
         
         [instance.requestSerializer setValue:tempStr forHTTPHeaderField:@"userType"];
 
+        NSLog(@"X-API-KEY - %@", [[VENUserTypeManager sharedManager] isLogin] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"Login"][@"apiKey"] : @"user_ios_lower_key");
+        NSLog(@"userType - %@", tempStr);
+        
         instance.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json", @"text/javascript", nil];
     });
     return instance;

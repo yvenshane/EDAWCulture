@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface VENCulturalCircleDetailViewController : UIViewController
+@property (nonatomic, copy) NSString *infoID;
 
 @end

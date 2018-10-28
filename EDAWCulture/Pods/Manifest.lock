@@ -22,6 +22,7 @@ PODS:
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
+  - TZImagePickerController (3.0.6)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - MJRefresh (~> 3.1.12)
   - SDCycleScrollView (~> 1.75)
   - SDWebImage (~> 4.0.0-beta2)
+  - TZImagePickerController
   - YYModel (~> 1.0.4)
 
 SPEC REPOS:
@@ -41,6 +43,7 @@ SPEC REPOS:
     - MJRefresh
     - SDCycleScrollView
     - SDWebImage
+    - TZImagePickerController
     - YYModel
 
 SPEC CHECKSUMS:
@@ -50,8 +53,9 @@ SPEC CHECKSUMS:
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   SDCycleScrollView: 884b88f0266dd4708a0e1934975c69cb971707b1
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
+  TZImagePickerController: f1cc4b5720f6d01c9804ad136c28bb8a986388d7
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 1e088757ba05d505272f3816c0bba5eaf24bbdcb
+PODFILE CHECKSUM: 3b33b08aeb4a084316635ce9a390e9cb35402e13
 
 COCOAPODS: 1.5.3

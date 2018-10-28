@@ -8,8 +8,13 @@
 
 #import "VENMyFocusingViewController.h"
 #import "VENMyFocusingTableViewCell.h"
+#import "VENHomePageModel.h"
+#import "VENWorkAndLuckDetailViewController.h"
 
 @interface VENMyFocusingViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, copy) NSDictionary *dataSourceDict;
+@property (nonatomic, copy) NSArray *resultArr;
 
 @end
 
@@ -25,21 +30,103 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.navigationController.navigationBar.translucent = NO;
     
     self.view.backgroundColor = UIColorFromRGB(0xf5f5f5);
-    [self setupTabbleView];
+    
     [self setupLeftBtn];
+    [self loadData];
+}
+
+- (void)loadData {
+    [[VENNetworkTool sharedManager] GET:@"index/userSubscribeMasters" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSDictionary *dataSourceDict = responseObject[@"data"];
+            
+            NSArray *resultArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:dataSourceDict[@"result"]];
+            
+            self.resultArr = resultArr;
+            self.dataSourceDict = dataSourceDict;
+            
+            [self setupTabbleView];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.resultArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    VENHomePageModel *model = self.resultArr[indexPath.row];
+    
     VENMyFocusingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    [cell.iconImageView sd_setImageWithURL:[NSURL URLWithString:model.avatarUrl] placeholderImage:nil];
+    cell.nameLabel.text = model.nickname;
+    cell.skillsLabel.text = [model.goodFields componentsJoinedByString:@"  "];
+    cell.profilesLabel.text = model.summary;
+    cell.priceLabel.text = model.price_text;
+    
+    if ([model.isSubscribe integerValue] == 1) {
+        cell.likeButton.selected = YES;
+        cell.likeButton.hidden = NO;
+    } else if ([model.isSubscribe integerValue] == 2) {
+        cell.likeButton.selected = NO;
+        cell.likeButton.hidden = YES;
+    }
+    
+    [cell.likeButton addTarget:self action:@selector(likeButtonClick:WithEvent:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)likeButtonClick:(UIButton *)button WithEvent:(id)event{
     
+    NSSet *touches =[event allTouches];
+    UITouch *touch =[touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath= [self.tableView indexPathForRowAtPoint:currentTouchPosition];
+    if (indexPath != nil)  {
+        // 执行你想要的操作
+    }
+    
+    button.selected = !button.selected;
+    
+    VENHomePageModel *model = self.resultArr[indexPath.row];
+    
+    NSDictionary *parameters = @{@"masterId": model.bannersID};
+    
+    [[VENNetworkTool sharedManager] POST:button.selected == NO ? @"index/userUnsubscribe" : @"index/userSubscribe" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@", error);
+    }];
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    VENHomePageModel *model = self.resultArr[indexPath.row];
+    
+    VENWorkAndLuckDetailViewController *vc = [[VENWorkAndLuckDetailViewController alloc] init];
+    vc.navTitle = self.navigationItem.title;
+    vc.masterId = model.bannersID;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,6 +151,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //    tableView.tableHeaderView = splitLineView;
 //
     [self.view addSubview:tableView];
+    
+    self.tableView = tableView;
 }
 
 - (void)setupLeftBtn {

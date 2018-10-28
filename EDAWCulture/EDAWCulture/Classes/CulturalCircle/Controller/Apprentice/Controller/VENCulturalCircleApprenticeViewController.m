@@ -9,12 +9,17 @@
 #import "VENCulturalCircleApprenticeViewController.h"
 #import "VENCulturalCircleApprenticeTableViewCell.h"
 
-@interface VENCulturalCircleApprenticeViewController () <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, assign) CGFloat cellHeight;
+@interface VENCulturalCircleApprenticeViewController () <UITableViewDelegate, UIWebViewDelegate>
+@property (nonatomic, copy) NSString *result;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *headerView;
+
+@property (nonatomic, strong) UITextField *nameTextField;
+@property (nonatomic, strong) UITextField *phoneTextField;
+@property (nonatomic, strong) UITextField *schoolTextField;
 
 @end
 
-static NSString *cellIdentifier = @"cellIdentifier";
 @implementation VENCulturalCircleApprenticeViewController
 
 - (void)viewDidLoad {
@@ -27,38 +32,49 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
     
-    // 计算 cell 高度
-    VENCulturalCircleApprenticeTableViewCell *cell = [[VENCulturalCircleApprenticeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    [cell layoutSubviews];
-    self.cellHeight = cell.maxHeight;
-    
     [self setupLeftBtn];
-    [self setupTableView];
+    [self loadData];
+}
+
+- (void)loadData {
+    [[VENNetworkTool sharedManager] GET:@"index/userWithIntro" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            NSString *result = responseObject[@"data"][@"result"];
+            self.result = result;
+            
+            [self setupTableView];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VENCulturalCircleApprenticeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.cellHeight;
-}
-
 - (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight) style:UITableViewStylePlain];
     tableView.delegate = self;
-    tableView.dataSource = self;
-    [tableView registerClass:[VENCulturalCircleApprenticeTableViewCell class] forCellReuseIdentifier:cellIdentifier];
     tableView.showsVerticalScrollIndicator = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableView];
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 1)];
+    tableView.tableHeaderView = headerView;
+    
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight)];
+    webView.delegate = self;
+    webView.scrollView.scrollEnabled = NO;
+    [webView loadHTMLString:self.result baseURL:nil];
+    [headerView addSubview:webView];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 49 + 10 + 49 + 10 + 49 + 20 + 49 + 20)];
     footerView.backgroundColor = [UIColor whiteColor];
@@ -106,10 +122,60 @@ static NSString *cellIdentifier = @"cellIdentifier";
     submitButton.layer.masksToBounds = YES;
     [submitButton addTarget:self action:@selector(submitButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:submitButton];
+    
+    self.tableView = tableView;
+    self.headerView = headerView;
+    
+    self.nameTextField = nameTextField;
+    self.phoneTextField = phoneTextField;
+    self.schoolTextField = schoolTextField;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    CGFloat webViewHeight = [webView.scrollView contentSize].height;
+    
+    CGRect newFrame = webView.frame;
+    newFrame.size.height = webViewHeight;
+    webView.frame = newFrame;
+    
+    self.tableView.tableHeaderView.frame = CGRectMake(0, 0, kMainScreenWidth, webViewHeight);
+    self.tableView.tableHeaderView = self.headerView;
 }
 
 - (void)submitButtonClick {
     
+    if (self.nameTextField.text.length < 1) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请填写您的姓名"];
+        return;
+    }
+    
+    if (self.phoneTextField.text.length < 1) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请填写联系方式"];
+        return;
+    }
+    
+    if (self.schoolTextField.text.length < 1) {
+        [[VENMBProgressHUDManager sharedManager] showText:@"请填写学派"];
+        return;
+    }
+    
+    NSDictionary *parameters = @{@"fullname": self.nameTextField.text,
+                                 @"contact": self.nameTextField.text,
+                                 @"study": self.nameTextField.text};
+    
+    [[VENNetworkTool sharedManager] POST:@"index/userWith" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (void)setupLeftBtn {
