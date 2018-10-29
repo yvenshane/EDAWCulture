@@ -45,6 +45,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *city_name;
 @property (nonatomic, copy) NSString *province_name;
 @property (nonatomic, copy) NSString *kefu;
+@property (nonatomic, copy) NSString *levelName;
+
+@property (nonatomic, copy) NSString *amount;
+@property (nonatomic, copy) NSString *status_text;
 
 @end
 

@@ -10,10 +10,10 @@
 
 @implementation VENNetworkTool
 
+static VENNetworkTool *instance;
+static dispatch_once_t onceToken;
+
 + (instancetype)sharedManager {
-    static VENNetworkTool *instance;
-    
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
         NSURL *baseURL = [NSURL URLWithString:@"http://yidao.ahaiba.com.cn/api/index.php/"];
@@ -40,6 +40,11 @@
         instance.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json", @"text/javascript", nil];
     });
     return instance;
+}
+
++ (void)resetInstance {
+    instance = nil;
+    onceToken = 0l;
 }
 
 @end

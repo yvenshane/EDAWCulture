@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface VENMyBalanceTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end

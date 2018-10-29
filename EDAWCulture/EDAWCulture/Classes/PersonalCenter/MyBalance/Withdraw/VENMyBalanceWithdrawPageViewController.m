@@ -10,7 +10,7 @@
 #import "VENMyBalanceWithdrawSuccessPageViewController.h"
 
 @interface VENMyBalanceWithdrawPageViewController ()
-
+@property (nonatomic, strong) UITextField *textField;
 @end
 
 @implementation VENMyBalanceWithdrawPageViewController
@@ -36,8 +36,8 @@
 - (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, kMainScreenWidth, kMainScreenHeight - statusNavHeight - 10) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
-    tableView.delegate = self;
-    tableView.dataSource = self;
+//    tableView.delegate = self;
+//    tableView.dataSource = self;
 //    [tableView registerNib:[UINib nibWithNibName:@"VENMyBalanceTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     tableView.showsVerticalScrollIndicator = NO;
     //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -82,11 +82,28 @@
     withdrawButton.layer.masksToBounds = YES;
     [withdrawButton addTarget:self action:@selector(withdrawButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:withdrawButton];
+    
+    
+    self.textField = textField;
 }
 
 - (void)withdrawButtonClick {
-    VENMyBalanceWithdrawSuccessPageViewController *vc = [[VENMyBalanceWithdrawSuccessPageViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    NSDictionary *parameters = @{@"amount": self.textField.text};
+    
+    [[VENNetworkTool sharedManager] POST:@"index/masterCash" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+                VENMyBalanceWithdrawSuccessPageViewController *vc = [[VENMyBalanceWithdrawSuccessPageViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (void)setupLeftBtn {

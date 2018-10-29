@@ -17,6 +17,7 @@
 #import "VENCulturalCircleDetailViewController.h"
 
 @interface VENHomePageViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, VENHomePageHeaderViewScrollViewDelegate>
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) VENHomePageHeaderViewScrollView *scrollView;
 @property (nonatomic, strong) VENHomePageHeaderViewScrollView *scrollView2;
 
@@ -36,6 +37,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
     [self loadHomePageData];
 }
@@ -301,6 +308,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     moreButton.layer.borderColor = UIColorFromRGB(0xe8e8e8).CGColor;
     
     [footerView addSubview:moreButton];
+    
+    _tableView = tableView;
 }
 
 - (void)moreButtonClick {

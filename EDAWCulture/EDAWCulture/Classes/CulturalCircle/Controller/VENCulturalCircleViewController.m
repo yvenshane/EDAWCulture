@@ -13,6 +13,7 @@
 #import "VENHomePageModel.h"
 
 @interface VENCulturalCircleViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSString *banner;
 @property (nonatomic, copy) NSArray *infosArr;
 
@@ -26,6 +27,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
     
     [self loadCulturalCirclePageData];
 }
@@ -109,6 +116,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     cycleScrollView.showPageControl = NO;
     cycleScrollView.imageURLStringsGroup = imagesURLStrings;
     [headerView addSubview:cycleScrollView];
+    
+    _tableView = tableView;
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index {

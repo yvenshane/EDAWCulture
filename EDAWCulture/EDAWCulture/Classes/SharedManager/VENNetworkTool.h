@@ -10,5 +10,6 @@
 
 @interface VENNetworkTool : AFHTTPSessionManager
 + (instancetype)sharedManager;
++ (void)resetInstance;
 
 @end

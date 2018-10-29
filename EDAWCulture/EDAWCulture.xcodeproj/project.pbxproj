@@ -607,8 +607,8 @@
 		2C91193F214D56D300A3B6DA /* MyBalance */ = {
 			isa = PBXGroup;
 			children = (
-				2C911940214D56D300A3B6DA /* Withdraw */,
 				2C911945214D56D300A3B6DA /* Main */,
+				2C911940214D56D300A3B6DA /* Withdraw */,
 			);
 			path = MyBalance;
 			sourceTree = "<group>";
@@ -616,10 +616,10 @@
 		2C911940214D56D300A3B6DA /* Withdraw */ = {
 			isa = PBXGroup;
 			children = (
-				2C911941214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m */,
+				2C911944214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.h */,
 				2C911942214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.m */,
 				2C911943214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.h */,
-				2C911944214D56D300A3B6DA /* VENMyBalanceWithdrawPageViewController.h */,
+				2C911941214D56D300A3B6DA /* VENMyBalanceWithdrawSuccessPageViewController.m */,
 			);
 			path = Withdraw;
 			sourceTree = "<group>";
@@ -627,9 +627,8 @@
 		2C911945214D56D300A3B6DA /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				2C911946214D56D300A3B6DA /* Controller */,
-				2C911949214D56D300A3B6DA /* Model */,
 				2C91194A214D56D300A3B6DA /* View */,
+				2C911946214D56D300A3B6DA /* Controller */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -637,25 +636,18 @@
 		2C911946214D56D300A3B6DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2C911947214D56D300A3B6DA /* VENMyBalanceViewController.m */,
 				2C911948214D56D300A3B6DA /* VENMyBalanceViewController.h */,
+				2C911947214D56D300A3B6DA /* VENMyBalanceViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2C911949214D56D300A3B6DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		2C91194A214D56D300A3B6DA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2C91194D214D56D300A3B6DA /* VENMyBalanceTableViewCell.h */,
 				2C91194B214D56D300A3B6DA /* VENMyBalanceTableViewCell.m */,
 				2C91194C214D56D300A3B6DA /* VENMyBalanceTableViewCell.xib */,
-				2C91194D214D56D300A3B6DA /* VENMyBalanceTableViewCell.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -691,10 +683,10 @@
 		2C911957214D56D300A3B6DA /* MyOrder */ = {
 			isa = PBXGroup;
 			children = (
-				2C911958214D56D300A3B6DA /* Underway */,
-				2C91195D214D56D300A3B6DA /* Finished */,
 				2C911962214D56D300A3B6DA /* Main */,
 				2C91196C214D56D300A3B6DA /* Unpaid */,
+				2C911958214D56D300A3B6DA /* Underway */,
+				2C91195D214D56D300A3B6DA /* Finished */,
 			);
 			path = MyOrder;
 			sourceTree = "<group>";
@@ -703,7 +695,6 @@
 			isa = PBXGroup;
 			children = (
 				2C911959214D56D300A3B6DA /* Controller */,
-				2C91195C214D56D300A3B6DA /* Model */,
 			);
 			path = Underway;
 			sourceTree = "<group>";
@@ -711,24 +702,16 @@
 		2C911959214D56D300A3B6DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2C91195A214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m */,
 				2C91195B214D56D300A3B6DA /* VENMyOrderUnderwayViewController.h */,
+				2C91195A214D56D300A3B6DA /* VENMyOrderUnderwayViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2C91195C214D56D300A3B6DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		2C91195D214D56D300A3B6DA /* Finished */ = {
 			isa = PBXGroup;
 			children = (
 				2C91195E214D56D300A3B6DA /* Controller */,
-				2C911961214D56D300A3B6DA /* Model */,
 			);
 			path = Finished;
 			sourceTree = "<group>";
@@ -742,18 +725,11 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		2C911961214D56D300A3B6DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		2C911962214D56D300A3B6DA /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				2C911963214D56D300A3B6DA /* Controller */,
 				2C911966214D56D300A3B6DA /* View */,
+				2C911963214D56D300A3B6DA /* Controller */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -770,11 +746,11 @@
 		2C911966214D56D300A3B6DA /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2C911967214D56D300A3B6DA /* VENMyOrderTableViewCell.h */,
 				2C911968214D56D300A3B6DA /* VENMyOrderCategoryView.h */,
-				2C911969214D56D300A3B6DA /* VENMyOrderTableViewCell.xib */,
-				2C91196A214D56D300A3B6DA /* VENMyOrderTableViewCell.m */,
 				2C91196B214D56D300A3B6DA /* VENMyOrderCategoryView.m */,
+				2C911967214D56D300A3B6DA /* VENMyOrderTableViewCell.h */,
+				2C91196A214D56D300A3B6DA /* VENMyOrderTableViewCell.m */,
+				2C911969214D56D300A3B6DA /* VENMyOrderTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,7 +759,6 @@
 			isa = PBXGroup;
 			children = (
 				2C91196D214D56D300A3B6DA /* Controller */,
-				2C911970214D56D300A3B6DA /* Model */,
 			);
 			path = Unpaid;
 			sourceTree = "<group>";
@@ -795,13 +770,6 @@
 				2C91196F214D56D300A3B6DA /* VENMyOrderUnpaidViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2C911970214D56D300A3B6DA /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		2C911980214D570000A3B6DA /* SharedManager */ = {

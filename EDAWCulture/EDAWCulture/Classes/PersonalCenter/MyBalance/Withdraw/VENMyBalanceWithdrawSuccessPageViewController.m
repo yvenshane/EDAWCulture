@@ -35,8 +35,8 @@
 - (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight) style:UITableViewStylePlain];
     tableView.backgroundColor = [UIColor whiteColor];
-    tableView.delegate = self;
-    tableView.dataSource = self;
+//    tableView.delegate = self;
+//    tableView.dataSource = self;
     //    [tableView registerNib:[UINib nibWithNibName:@"VENMyBalanceTableViewCell" bundle:nil] forCellReuseIdentifier:cellIdentifier];
     tableView.showsVerticalScrollIndicator = NO;
     //    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -102,6 +102,9 @@
 
 - (void)setupLeftBtnClick {
 //    [self.navigationController popViewControllerAnimated:YES];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESH_MY_BALANCE" object:nil];
+    
     int index = (int)[[self.navigationController viewControllers] indexOfObject:self];
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(index - 2)] animated:YES];
 }

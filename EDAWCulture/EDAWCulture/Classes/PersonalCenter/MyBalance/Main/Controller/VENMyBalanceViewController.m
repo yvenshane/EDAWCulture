@@ -9,8 +9,14 @@
 #import "VENMyBalanceViewController.h"
 #import "VENMyBalanceTableViewCell.h"
 #import "VENMyBalanceWithdrawPageViewController.h"
+#import "VENHomePageModel.h"
 
 @interface VENMyBalanceViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIView *headerView;
+
+@property (nonatomic, copy) NSString *balance;
+@property (nonatomic, copy) NSArray *dataSource;
 
 @end
 
@@ -23,16 +29,57 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupTabbleView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMyBalance) name:@"REFRESH_MY_BALANCE" object:nil];
+    
+    [self loadData];
+}
+
+- (void)refreshMyBalance {
+    [self loadData];
+}
+
+- (void)loadData {
+    [[VENNetworkTool sharedManager] GET:@"index/pageMasterBalance" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+            self.dataSource = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"cash_orders"]];
+            self.balance = responseObject[@"data"][@"balance"];
+            
+//            [self.view removeFromSuperview];
+            
+            if (!self.tableView) {
+                [self setupTabbleView];
+            } else {
+                self.headerView = nil;
+                [self setupHeaderView];
+                [self.tableView reloadData];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VENMyBalanceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    VENHomePageModel *model = self.dataSource[indexPath.row];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.priceLabel.text = model.amount;
+    cell.dateLabel.text = model.created_time;
+    cell.statusLabel.text = model.status_text;
+    
     return cell;
 }
 
@@ -53,14 +100,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
     
+    self.tableView = tableView;
+    
+    [self setupHeaderView];
+}
+
+- (void)setupHeaderView {
     // 整个 HeaderView
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 306)];
-    headerView.backgroundColor = UIColorFromRGB(0x5b25e6);
-    tableView.tableHeaderView = headerView;
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, 306)];
+    self.headerView.backgroundColor = UIColorFromRGB(0x5b25e6);
+    self.tableView.tableHeaderView = self.headerView;
     
     UIView *navView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, kMainScreenWidth, 44)];
     //    navView.backgroundColor = [UIColor whiteColor];
-    [headerView addSubview:navView];
+    [self.headerView addSubview:navView];
     
     // 返回按钮
     UIButton *backButton = [[UIButton alloc] init];
@@ -76,18 +129,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     // 金额
     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 82, kMainScreenWidth, 43)];
-    priceLabel.text = @"9999.00";
+    priceLabel.text = self.balance;
     priceLabel.textAlignment = NSTextAlignmentCenter;
     priceLabel.textColor = [UIColor whiteColor];
     priceLabel.font = [UIFont systemFontOfSize:36.0f];
-    [headerView addSubview:priceLabel];
+    [self.headerView addSubview:priceLabel];
     
     UILabel *myPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 82 + 43 + 17, kMainScreenWidth, 18)];
     myPriceLabel.text = @"我的余额(元)";
     myPriceLabel.textAlignment = NSTextAlignmentCenter;
     myPriceLabel.textColor = [UIColor whiteColor];
     myPriceLabel.font = [UIFont systemFontOfSize:15.0f];
-    [headerView addSubview:myPriceLabel];
+    [self.headerView addSubview:myPriceLabel];
     
     // 申请提现
     UIButton *withdrawButton = [[UIButton alloc] init];
@@ -97,11 +150,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     withdrawButton.layer.cornerRadius = 4.0f;
     withdrawButton.layer.masksToBounds = YES;
     [withdrawButton addTarget:self action:@selector(withdrawButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:withdrawButton];
+    [self.headerView addSubview:withdrawButton];
     
     [withdrawButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(myPriceLabel.mas_bottom).offset(22.5f);
-        make.centerX.mas_equalTo(headerView.mas_centerX);
+        make.centerX.mas_equalTo(self.headerView.mas_centerX);
         make.width.mas_equalTo(130);
         make.height.mas_equalTo(44);
     }];
@@ -109,7 +162,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // 提现记录
     UIView *backgroundView = [[UIView alloc] init];
     backgroundView.backgroundColor = UIColorFromRGB(0xf5f5f5);
-    [headerView addSubview: backgroundView];
+    [self.headerView addSubview: backgroundView];
     
     [backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(withdrawButton.mas_bottom).offset(50);

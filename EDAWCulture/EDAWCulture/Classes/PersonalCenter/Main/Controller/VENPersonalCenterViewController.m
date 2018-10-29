@@ -53,6 +53,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [self loadData];
     
     _maxCount = 1;
@@ -60,7 +66,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)loadData {
-    [[VENNetworkTool sharedManager] GET:@"index/userCenter" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    [[VENNetworkTool sharedManager] GET:[[VENUserTypeManager sharedManager] isMaster] ? @"index/masterCenter" : @"index/userCenter" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@", responseObject);
         
@@ -111,14 +118,37 @@ static NSString *cellIdentifier = @"cellIdentifier";
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == 4) { // 我的余额
             VENMyBalanceViewController *vc = [[VENMyBalanceViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = NO;
             [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 5) { // 我的消息
+            
+        } else if (indexPath.row == 6) { // 联系客服
+            NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@", self.model.kefu];
+            UIWebView * callWebview = [[UIWebView alloc] init];
+            [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+            [self.view addSubview:callWebview];
         }
+        
     } else { // 用户
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0) { // 我的订单
+            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            self.hiddenNav = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 1) { // 未付款
+            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            self.hiddenNav = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 2) { // 进行中
+            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            self.hiddenNav = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 3) { // 已完成
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
@@ -197,10 +227,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
         // 技能等级
         UILabel *skillLevelLabel = [[UILabel alloc] init];
-        
-        NSString *str = @"v5";
-        
-        NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"技能等级：%@", str]];
+        NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"技能等级：%@", self.model.levelName]];
         [attributedStr addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xcab6ff) range:NSMakeRange(0, 5)];
         [attributedStr addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(4, attributedStr.length - 4)];
         skillLevelLabel.attributedText = attributedStr;

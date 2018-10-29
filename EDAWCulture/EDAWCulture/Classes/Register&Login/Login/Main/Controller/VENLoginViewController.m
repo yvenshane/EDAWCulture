@@ -131,6 +131,8 @@
             VENTabBarController *vc = [[VENTabBarController alloc]init];
             [UIApplication sharedApplication].keyWindow.rootViewController = vc;
             
+            [VENNetworkTool resetInstance];
+            
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
