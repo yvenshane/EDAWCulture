@@ -73,7 +73,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             self.recMastersArr = recMastersArr;
             self.serviceIconsArr = serviceIconsArr;
             
-            [self setupTabbleView];
+            [self setupTableView];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -113,7 +113,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return 120;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 49) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

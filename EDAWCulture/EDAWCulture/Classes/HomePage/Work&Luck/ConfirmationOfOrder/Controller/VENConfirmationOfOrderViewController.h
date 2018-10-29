@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *school;
 @property (nonatomic, copy) NSString *imageURL;
 
+@property (nonatomic, assign) BOOL isContinuePayment; // 继续支付
+
 @end
 
 NS_ASSUME_NONNULL_END

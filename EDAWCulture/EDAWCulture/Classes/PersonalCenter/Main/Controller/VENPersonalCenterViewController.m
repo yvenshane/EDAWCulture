@@ -78,7 +78,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             VENHomePageModel *model = [VENHomePageModel yy_modelWithJSON:responseObject[@"data"]];
             self.model = model;
             
-            [self setupTabbleView];
+            [self setupTableView];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -171,7 +171,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return 49;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - tabBarHeight) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

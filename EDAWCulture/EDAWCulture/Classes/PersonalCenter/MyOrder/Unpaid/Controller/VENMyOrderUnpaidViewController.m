@@ -8,8 +8,12 @@
 
 #import "VENMyOrderUnpaidViewController.h"
 #import "VENMyOrderTableViewCell.h"
+#import "VENHomePageModel.h"
+#import "VENConfirmationOfOrderViewController.h"
 
 @interface VENMyOrderUnpaidViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, copy) NSArray *resultArr;
 
 @end
 
@@ -21,27 +25,66 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setupTabbleView];
+    
+    [self loadData];
+}
+
+- (void)loadData {
+    
+    [[VENNetworkTool sharedManager] GET:@"index/getServiceOrders" parameters:@{@"status": @"-1"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            NSArray *resultArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"result"]];
+            self.resultArr = resultArr;
+            
+            [self setupTableView];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.resultArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    VENHomePageModel *model = self.resultArr[indexPath.row];
+    
     VENMyOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.dateLabel.text = model.created_time;
+    cell.productNameLabel.text = model.name;
+    cell.priceLabel.text = model.price;
+    [cell.sendMessageButton setTitle:@"继续付款" forState:UIControlStateNormal];
+    [cell.sendMessageButton addTarget:self action:@selector(continuePaymentClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)continuePaymentClick:(id)sender { // 继续付款
     
+    VENHomePageModel *model = self.resultArr[[self.tableView indexPathForCell:((VENMyOrderTableViewCell *)[[sender superview]superview])].row];
+    
+    VENConfirmationOfOrderViewController *vc = [[VENConfirmationOfOrderViewController alloc] init];
+    vc.model = model;
+    vc.name = model.master_nickname;
+    vc.imageURL = model.master_avatar_url;
+    vc.level = model.master_level_name;
+    vc.school = model.master_study;
+    vc.isContinuePayment = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 96;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 42 - statusNavHeight - 10) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
@@ -53,6 +96,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.separatorColor = UIColorFromRGB(0xe8e8e8);
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
+    
+    _tableView = tableView;
 }
 
 - (void)didReceiveMemoryWarning {

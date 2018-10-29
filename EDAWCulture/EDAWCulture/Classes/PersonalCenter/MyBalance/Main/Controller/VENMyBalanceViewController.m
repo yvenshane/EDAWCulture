@@ -53,7 +53,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //            [self.view removeFromSuperview];
             
             if (!self.tableView) {
-                [self setupTabbleView];
+                [self setupTableView];
             } else {
                 self.headerView = nil;
                 [self setupHeaderView];
@@ -87,7 +87,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return 73;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight + statusNavHeight - 44) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

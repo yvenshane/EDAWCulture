@@ -53,7 +53,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             self.resultArr = resultArr;
             self.dataSourceDict = dataSourceDict;
             
-            [self setupTabbleView];
+            [self setupTableView];
             
             
         }
@@ -157,7 +157,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return 130;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight) style:UITableViewStyleGrouped];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

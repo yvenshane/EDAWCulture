@@ -32,7 +32,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupTabbleView];
+    [self setupTableView];
 //    [self loadRegisterViewData];
 }
 
@@ -177,7 +177,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 74, kMainScreenWidth, kMainScreenHeight - 74) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

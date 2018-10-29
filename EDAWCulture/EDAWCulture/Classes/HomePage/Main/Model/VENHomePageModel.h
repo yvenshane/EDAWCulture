@@ -50,6 +50,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *amount;
 @property (nonatomic, copy) NSString *status_text;
 
+@property (nonatomic, copy) NSString *service_name;
+
+@property (nonatomic, copy) NSString *master_avatar_url;
+@property (nonatomic, copy) NSString *master_level_name;
+@property (nonatomic, copy) NSString *master_nickname;
+@property (nonatomic, copy) NSString *master_study;
+@property (nonatomic, copy) NSString *order_no;
+
 @end
 
 NS_ASSUME_NONNULL_END

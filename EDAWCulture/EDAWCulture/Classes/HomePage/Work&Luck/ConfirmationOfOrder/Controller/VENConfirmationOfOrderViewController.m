@@ -89,7 +89,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight - 44) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorMake(245, 248, 247);
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -140,7 +140,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupBottomBar {
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - 44, kMainScreenWidth, 44)];
+    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight -  statusNavHeight - 44, kMainScreenWidth, 44)];
     bottomBar.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomBar];
     
@@ -167,43 +167,85 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)payButtonClick {
     
-    NSDictionary *parameters = @{@"serviceId": self.model.bannersID,
-                                 @"pay_channel": self.payType ? @"alipay_app" : @"wxpay_app"};
-    
-    [[VENNetworkTool sharedManager] POST:@"index/serviceOrder" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    if (self.isContinuePayment) { // 继续支付
+        NSDictionary *parameters = @{@"orderNo": self.model.order_no,
+                                     @"pay_channel": self.payType ? @"alipay_app" : @"wxpay_app"};
         
-        NSLog(@"%@", responseObject);
-        
-//        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
-        
-        if ([responseObject[@"code"] integerValue] == 1) {
+        [[VENNetworkTool sharedManager] GET:@"index/serviceOrderPayment" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            self.oderDict = responseObject[@"data"][@"order"];
+            NSLog(@"%@", responseObject);
             
-            if (self.payType) {
-                
-                // 此回调只会在 H5 版支付宝时 调用, 支付宝客户端支付回调 走 AppDelegate
-                [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"EDAWCulture" callback:^(NSDictionary *resultDic) {
+            //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+//
+                self.oderDict = responseObject[@"data"][@"order"];
 
-                    NSLog(@"reslut = %@",resultDic);
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ALIPAY_RESULTDIC" object:resultDic];
-                }];
-            } else {
-                PayReq *req = [[PayReq alloc] init];
-                req.partnerId = [responseObject[@"data"][@"orderString"] objectForKey:@"partnerid"];
-                req.prepayId = [responseObject[@"data"][@"orderString"] objectForKey:@"prepayid"];
-                req.nonceStr = [responseObject[@"data"][@"orderString"] objectForKey:@"noncestr"];
-                req.timeStamp = [[responseObject[@"data"][@"orderString"] objectForKey:@"timeStamp"] intValue];
-                req.package = [responseObject[@"data"][@"orderString"] objectForKey:@"package"];
-                req.sign = [responseObject[@"data"][@"orderString"] objectForKey:@"sign"];
-                [WXApi sendReq:req];
+                if (self.payType) {
+
+                    // 此回调只会在 H5 版支付宝时 调用, 支付宝客户端支付回调 走 AppDelegate
+                    [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"EDAWCulture" callback:^(NSDictionary *resultDic) {
+
+                        NSLog(@"reslut = %@",resultDic);
+
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ALIPAY_RESULTDIC" object:resultDic];
+                    }];
+                } else {
+                    PayReq *req = [[PayReq alloc] init];
+                    req.partnerId = [responseObject[@"data"][@"orderString"] objectForKey:@"partnerid"];
+                    req.prepayId = [responseObject[@"data"][@"orderString"] objectForKey:@"prepayid"];
+                    req.nonceStr = [responseObject[@"data"][@"orderString"] objectForKey:@"noncestr"];
+                    req.timeStamp = [[responseObject[@"data"][@"orderString"] objectForKey:@"timeStamp"] intValue];
+                    req.package = [responseObject[@"data"][@"orderString"] objectForKey:@"package"];
+                    req.sign = [responseObject[@"data"][@"orderString"] objectForKey:@"sign"];
+                    [WXApi sendReq:req];
+                }
             }
-        }
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@", error);
+        }];
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
-    }];
+        
+    } else { // 立即支付
+        NSDictionary *parameters = @{@"serviceId": self.model.bannersID,
+                                     @"pay_channel": self.payType ? @"alipay_app" : @"wxpay_app"};
+        
+        [[VENNetworkTool sharedManager] POST:@"index/serviceOrder" parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSLog(@"%@", responseObject);
+            
+            //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+                
+                self.oderDict = responseObject[@"data"][@"order"];
+                
+                if (self.payType) {
+                    
+                    // 此回调只会在 H5 版支付宝时 调用, 支付宝客户端支付回调 走 AppDelegate
+                    [[AlipaySDK defaultService] payOrder:responseObject[@"data"][@"orderString"] fromScheme:@"EDAWCulture" callback:^(NSDictionary *resultDic) {
+                        
+                        NSLog(@"reslut = %@",resultDic);
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"ALIPAY_RESULTDIC" object:resultDic];
+                    }];
+                } else {
+                    PayReq *req = [[PayReq alloc] init];
+                    req.partnerId = [responseObject[@"data"][@"orderString"] objectForKey:@"partnerid"];
+                    req.prepayId = [responseObject[@"data"][@"orderString"] objectForKey:@"prepayid"];
+                    req.nonceStr = [responseObject[@"data"][@"orderString"] objectForKey:@"noncestr"];
+                    req.timeStamp = [[responseObject[@"data"][@"orderString"] objectForKey:@"timeStamp"] intValue];
+                    req.package = [responseObject[@"data"][@"orderString"] objectForKey:@"package"];
+                    req.sign = [responseObject[@"data"][@"orderString"] objectForKey:@"sign"];
+                    [WXApi sendReq:req];
+                }
+            }
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@", error);
+        }];
+    }
 }
 
 - (void)alipayCallbackMethod:(NSNotification *)noti {

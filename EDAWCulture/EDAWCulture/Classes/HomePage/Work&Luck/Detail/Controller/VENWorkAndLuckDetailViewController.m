@@ -60,7 +60,7 @@
             NSDictionary *dataSourceDict = responseObject[@"data"];
             self.dataSourceDict = dataSourceDict;
             
-            [self setupTabbleView];
+            [self setupTableView];
             [self setupBottomToolBar];
         }
         
@@ -73,7 +73,7 @@
     return 0;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight - 24) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;

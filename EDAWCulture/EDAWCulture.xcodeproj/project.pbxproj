@@ -538,8 +538,6 @@
 		2C7144E6214B9E340034CE94 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				2C7144EA214B9E340034CE94 /* Model */,
-				2C7144EB214B9E340034CE94 /* View */,
 				2C7144E7214B9E340034CE94 /* Controller */,
 			);
 			path = List;
@@ -552,20 +550,6 @@
 				2C7144E8214B9E340034CE94 /* VENWorkAndLuckViewController.m */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		2C7144EA214B9E340034CE94 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		2C7144EB214B9E340034CE94 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		2C91192C214D565500A3B6DA /* Apprentice */ = {

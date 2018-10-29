@@ -8,8 +8,10 @@
 
 #import "VENMyOrderUnderwayViewController.h"
 #import "VENMyOrderTableViewCell.h"
+#import "VENHomePageModel.h"
 
 @interface VENMyOrderUnderwayViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, copy) NSArray *resultArr;
 
 @end
 
@@ -21,27 +23,55 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setupTabbleView];
+
+    [self loadData];
+}
+
+- (void)loadData {
+    
+    [[VENNetworkTool sharedManager] GET:@"index/getServiceOrders" parameters:@{@"status": @"1"} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        //        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            NSArray *resultArr = [NSArray yy_modelArrayWithClass:[VENHomePageModel class] json:responseObject[@"data"][@"result"]];
+            self.resultArr = resultArr;
+            
+            [self setupTableView];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return self.resultArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    VENHomePageModel *model = self.resultArr[indexPath.row];
+    
     VENMyOrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.dateLabel.text = model.created_time;
+    cell.productNameLabel.text = model.name;
+    cell.priceLabel.text = model.price;
+    [cell.sendMessageButton addTarget:self action:@selector(sendMessageClick:) forControlEvents:UIControlEventTouchUpInside];
+
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (void)sendMessageClick:(id)sender {
+    NSLog(@"点击");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 96;
 }
 
-- (void)setupTabbleView {
+- (void)setupTableView {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 42 - statusNavHeight - 10) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
