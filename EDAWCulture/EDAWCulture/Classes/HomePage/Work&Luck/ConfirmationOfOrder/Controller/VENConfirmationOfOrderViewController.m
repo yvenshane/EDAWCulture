@@ -89,6 +89,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupTableView {
+//    CGRect frame = self.isContinuePayment ? CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight - 44) : CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44);
+    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - statusNavHeight - 44) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorMake(245, 248, 247);
     tableView.delegate = self;
@@ -140,7 +142,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 - (void)setupBottomBar {
-    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight -  statusNavHeight - 44, kMainScreenWidth, 44)];
+    
+    
+    
+//    CGRect frame = self.isContinuePayment ? CGRectMake(0, kMainScreenHeight - statusNavHeight - 44, kMainScreenWidth, 44) : CGRectMake(0, kMainScreenHeight - 44, kMainScreenWidth, 44);
+    
+    UIView *bottomBar = [[UIView alloc] initWithFrame:CGRectMake(0, kMainScreenHeight - statusNavHeight - 44, kMainScreenWidth, 44)];
     bottomBar.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomBar];
     

@@ -60,8 +60,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
     cell.dateLabel.text = model.created_time;
     cell.productNameLabel.text = model.name;
     cell.priceLabel.text = model.price;
-    [cell.sendMessageButton setTitle:@"继续付款" forState:UIControlStateNormal];
-    [cell.sendMessageButton addTarget:self action:@selector(continuePaymentClick:) forControlEvents:UIControlEventTouchUpInside];
+
+    if ([[VENUserTypeManager sharedManager] isMaster]) {
+        cell.sendMessageButton.hidden = YES;
+    } else {
+        [cell.sendMessageButton setTitle:@"继续付款" forState:UIControlStateNormal];
+        [cell.sendMessageButton addTarget:self action:@selector(continuePaymentClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return cell;
 }

@@ -11,6 +11,7 @@
 #import "VENHomePageModel.h"
 
 @interface VENMyOrderUnderwayViewController () <UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) NSArray *resultArr;
 
 @end
@@ -58,13 +59,39 @@ static NSString *cellIdentifier = @"cellIdentifier";
     cell.dateLabel.text = model.created_time;
     cell.productNameLabel.text = model.name;
     cell.priceLabel.text = model.price;
-    [cell.sendMessageButton addTarget:self action:@selector(sendMessageClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    
+    if ([[VENUserTypeManager sharedManager] isMaster]) {
+        
+        [cell.sendMessageButton setTitle:@"结束服务" forState:UIControlStateNormal];
+        [cell.sendMessageButton addTarget:self action:@selector(sendMessageClick2:) forControlEvents:UIControlEventTouchUpInside];
+        
+    } else {
+        [cell.sendMessageButton addTarget:self action:@selector(sendMessageClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     return cell;
 }
 
-- (void)sendMessageClick:(id)sender {
-    NSLog(@"点击");
+- (void)sendMessageClick2:(id)sender { // 结束服务
+    VENHomePageModel *model = self.resultArr[[self.tableView indexPathForCell:((VENMyOrderTableViewCell *)[[sender superview]superview])].row];
+    
+    [[VENNetworkTool sharedManager] POST:@"index/masterFinishOrder" parameters:@{@"orderNo": model.order_no} progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+        [[VENMBProgressHUDManager sharedManager] showText:responseObject[@"msg"]];
+        
+        if ([responseObject[@"code"] integerValue] == 1) {
+            
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+}
+
+- (void)sendMessageClick:(id)sender { // 联系大师
+    
+    NSLog(@"联系点击");
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,6 +110,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     tableView.separatorColor = UIColorFromRGB(0xe8e8e8);
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:tableView];
+    
+    self.tableView = tableView;
 }
 
 - (void)didReceiveMemoryWarning {

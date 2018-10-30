@@ -17,9 +17,7 @@
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, assign) NSInteger pageIdx;
 
-@property (nonatomic, copy) NSString *refreshTag1;
-@property (nonatomic, copy) NSString *refreshTag2;
-@property (nonatomic, copy) NSString *refreshTag3;
+@property (nonatomic, assign) BOOL scrollAnimated;
 
 @end
 
@@ -36,12 +34,12 @@
     self.navigationController.navigationBar.translucent = NO;
 
     [self setupUI];
-    
-    _refreshTag1 = @"0";
-    _refreshTag2 = @"0";
-    _refreshTag3 = @"0";
-    
     [self setupLeftBtn];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.categoryView.btnsArr[self.pushIndexPath] sendActionsForControlEvents:UIControlEventTouchUpInside];
+        self.scrollAnimated = YES;
+    });
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -62,58 +60,6 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat offsetX = scrollView.contentOffset.x;
     _pageIdx = offsetX / kMainScreenWidth;
-    
-    // 滚动加载数据
-//    if (_pageIdx == 1) {
-//
-//        if ([_refreshTag1 isEqualToString:@"0"]) {
-//            _refreshTag1 = @"1";
-//
-//            NSString *classNameString = @"XLAlreadyCheckTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLAlreadyCheckTableViewController *vcc = (XLAlreadyCheckTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//                }
-//            }
-//        }
-//    } else if (_pageIdx == 2) {
-//
-//        if ([_refreshTag2 isEqualToString:@"0"]) {
-//            _refreshTag2 = @"1";
-//
-//            NSString *classNameString = @"XLIntentionToMeTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLIntentionToMeTableViewController *vcc = (XLIntentionToMeTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//
-//                }
-//            }
-//        }
-//
-//    }  else if (_pageIdx == 3) {
-//
-//        if ([_refreshTag3 isEqualToString:@"0"]) {
-//            _refreshTag3 = @"1";
-//
-//            NSString *classNameString = @"XLTemporaryInappropriateTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLTemporaryInappropriateTableViewController *vcc = (XLTemporaryInappropriateTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//
-//                }
-//            }
-//        }
-//
-//    }
 }
 
 - (void)categoryViewValueChanged:(VENMyOrderCategoryView *)sender {
@@ -123,59 +69,7 @@
     _pageIdx = pageNumber;
     // 2.让scrollView滚动
     CGRect rect = CGRectMake(_scrollView.bounds.size.width * pageNumber, 0, _scrollView.bounds.size.width, _scrollView.bounds.size.height);
-    [_scrollView scrollRectToVisible:rect animated:YES];
-    
-    // 点击加载数据
-//    if (pageNumber == 1) {
-//
-//        if ([_refreshTag1 isEqualToString:@"0"]) {
-//            _refreshTag1 = @"1";
-//
-//            NSString *classNameString = @"XLAlreadyCheckTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLAlreadyCheckTableViewController *vcc = (XLAlreadyCheckTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//                }
-//            }
-//        }
-//    } else if (pageNumber == 2) {
-//
-//        if ([_refreshTag2 isEqualToString:@"0"]) {
-//            _refreshTag2 = @"1";
-//
-//            NSString *classNameString = @"XLIntentionToMeTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLIntentionToMeTableViewController *vcc = (XLIntentionToMeTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//
-//                }
-//            }
-//        }
-//
-//    }  else if (pageNumber == 3) {
-//
-//        if ([_refreshTag3 isEqualToString:@"0"]) {
-//            _refreshTag3 = @"1";
-//
-//            NSString *classNameString = @"XLTemporaryInappropriateTableViewController";
-//            Class cls = NSClassFromString(classNameString);
-//            for (UIViewController *vc in self.childViewControllers) {
-//                if ([vc isKindOfClass:cls]) {
-//                    XLTemporaryInappropriateTableViewController *vcc = (XLTemporaryInappropriateTableViewController *)vc;
-//
-//                    [vcc.mTableView.mj_header beginRefreshing];
-//
-//                }
-//            }
-//        }
-//
-//    }
+    [_scrollView scrollRectToVisible:rect animated:_scrollAnimated];
 }
 
 - (void)setupUI {

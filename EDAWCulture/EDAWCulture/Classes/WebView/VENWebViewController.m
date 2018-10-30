@@ -114,6 +114,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
 /*
 #pragma mark - Navigation
 

@@ -114,7 +114,22 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     if ([VENUserTypeManager sharedManager].isMaster) { // 大师
         if (indexPath.row == 0) {
+            
+        } else if (indexPath.row == 1) { // 未付款
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 0;
+            vc.hidesBottomBarWhenPushed = YES;
+            self.hiddenNav = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 2) { // 进行中
+            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 1;
+            vc.hidesBottomBarWhenPushed = YES;
+            self.hiddenNav = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        } else if (indexPath.row == 3) { // 已完成
+            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 2;
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
@@ -134,22 +149,22 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
     } else { // 用户
         if (indexPath.row == 0) { // 我的订单
-            VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
-            vc.hidesBottomBarWhenPushed = YES;
-            self.hiddenNav = YES;
-            [self.navigationController pushViewController:vc animated:YES];
+            
         } else if (indexPath.row == 1) { // 未付款
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 0;
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } else if (indexPath.row == 2) { // 进行中
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 1;
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];
         } else if (indexPath.row == 3) { // 已完成
             VENMyOrderViewController *vc = [[VENMyOrderViewController alloc] init];
+            vc.pushIndexPath = 2;
             vc.hidesBottomBarWhenPushed = YES;
             self.hiddenNav = YES;
             [self.navigationController pushViewController:vc animated:YES];

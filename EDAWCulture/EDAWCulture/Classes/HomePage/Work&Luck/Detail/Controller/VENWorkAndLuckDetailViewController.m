@@ -36,6 +36,12 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [self loadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(continueTheOrder) name:@"CONTINUE_THE_ORDER" object:nil];
@@ -74,7 +80,7 @@
 }
 
 - (void)setupTableView {
-    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -20, kMainScreenWidth, kMainScreenHeight - 24) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kMainScreenWidth, kMainScreenHeight - 44) style:UITableViewStylePlain];
     tableView.backgroundColor = UIColorFromRGB(0xf5f5f5);
     tableView.delegate = self;
 //    tableView.dataSource = self;

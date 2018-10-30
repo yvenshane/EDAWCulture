@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface VENMyOrderViewController : UIViewController
+@property (nonatomic, assign) NSInteger pushIndexPath;
 
 @end
